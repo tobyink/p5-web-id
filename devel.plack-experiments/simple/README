@@ -1,0 +1,9 @@
+This seems to work using mod_perl; the SSL client cert is visible.
+
+Note though:
+
+SSLVerifyClient optional
+# http://httpd.apache.org/docs/2.0/mod/mod_ssl.html#sslverifyclient
+
+SSLOptions +ExportCertData
+# http://httpd.apache.org/docs/2.0/mod/mod_ssl.html#ssloptions
