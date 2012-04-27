@@ -162,7 +162,7 @@ sub timely
 # prioritising URIs and Email addresses.
 sub _sort_san
 {
-	map  { @$_ }
+	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
 	part {
 		if ($_->isa('Web::Id::SAN::URI'))       { 0 }
 		elsif ($_->isa('Web::Id::SAN::Email'))  { 1 }
