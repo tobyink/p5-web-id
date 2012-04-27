@@ -8,8 +8,6 @@ BEGIN {
 	$Web::Id::SAN::URI::VERSION   = '0.001';
 }
 
-use RDF::Query 2.900;
-use URI 0;
 use Web::Id::Util;
 
 use Any::Moose;
@@ -61,6 +59,51 @@ around associated_keys => sub
 	return @keys;
 };
 
+sub query
+{
+	my ($self) = @_;
+	return RDF::Query->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );
+PREFIX cert: <http://www.w3.org/ns/auth/cert#>
+PREFIX rsa: <http://www.w3.org/ns/auth/rsa#>
+SELECT
+	?modulus
+	?exponent
+	?decExponent
+	?hexModulus
+WHERE
+{
+	{
+		?key
+			cert:identity <%s> ;
+			rsa:modulus ?modulus ;
+			rsa:public_exponent ?exponent .
+	}
+	UNION
+	{
+		<%s> cert:key ?key .
+		?key
+			rsa:modulus ?modulus ;
+			rsa:public_exponent ?exponent .
+	}
+	UNION
+	{
+		?key
+			cert:identity <%s> ;
+			cert:modulus ?modulus ;
+			cert:exponent ?exponent .
+	}
+	UNION
+	{
+		<%s> cert:key ?key .
+		?key
+			cert:modulus ?modulus ;
+			cert:exponent ?exponent .
+	}
+	OPTIONAL { ?modulus cert:hex ?hexModulus . }
+	OPTIONAL { ?exponent cert:decimal ?decExponent . }
+}
+SPARQL
+}
 
 __PACKAGE__
 

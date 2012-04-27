@@ -8,6 +8,9 @@ BEGIN {
 	$Web::Id::SAN::VERSION   = '0.001';
 }
 
+use RDF::Query 2.900;
+use URI 0;
+use URI::Escape 0 qw/uri_escape/;
 use Web::Id::RSAKey;
 use Web::Id::Util;
 
@@ -63,14 +66,10 @@ sub _build_key_factory
 	return $default_key_factory;
 }
 
-sub associated_keys
-{
-	return;
-}
-
 sub uri_object
 {
-	return URI->new('urn:x-rand:'.rand(100_000_000));
+	my ($self) = @_;
+	return URI->new(sprintf 'urn:x-subject-alt-name:%s:%s', map {uri_escape $_} $self->type, $self->value);
 }
 
 sub to_string
@@ -79,50 +78,9 @@ sub to_string
 	sprintf('%s=%s', $self->type, $self->value);
 }
 
-sub query
+sub associated_keys
 {
-	my ($self) = @_;
-	return RDF::Query->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );
-PREFIX cert: <http://www.w3.org/ns/auth/cert#>
-PREFIX rsa: <http://www.w3.org/ns/auth/rsa#>
-SELECT
-	?modulus
-	?exponent
-	?decExponent
-	?hexModulus
-WHERE
-{
-	{
-		?key
-			cert:identity <%s> ;
-			rsa:modulus ?modulus ;
-			rsa:public_exponent ?exponent .
-	}
-	UNION
-	{
-		<%s> cert:key ?key .
-		?key
-			rsa:modulus ?modulus ;
-			rsa:public_exponent ?exponent .
-	}
-	UNION
-	{
-		?key
-			cert:identity <%s> ;
-			cert:modulus ?modulus ;
-			cert:exponent ?exponent .
-	}
-	UNION
-	{
-		<%s> cert:key ?key .
-		?key
-			cert:modulus ?modulus ;
-			cert:exponent ?exponent .
-	}
-	OPTIONAL { ?modulus cert:hex ?hexModulus . }
-	OPTIONAL { ?exponent cert:decimal ?decExponent . }
-}
-SPARQL
+	return;
 }
 
 __PACKAGE__
