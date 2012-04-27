@@ -144,7 +144,84 @@ Web::Id - implementation of WebId (a.k.a. FOAF+SSL)
 
 =head1 SYNOPSIS
 
+ my $webid = Web::Id->new(certificate => $pem_encoded_x509);
+ if ($webid->valid)
+ {
+   say "Authenticated as: ", $webid->uri;
+ }
+
 =head1 DESCRIPTION
+
+=head2 Constructor
+
+=over
+
+=item C<< new >>
+
+Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item C<< certificate >>
+
+A L<Web::Id::Certificate> object representing and x509 certificate,
+though a PEM-encoded string will be coerced.
+
+This is usually the only attribute you want to pass to the constructor.
+Allow the others to be built automatically.
+
+=item C<< first_valid_san >>
+
+Probably fairly uninteresting. This is the first subjectAltName value
+found in the certificate that could be successfully authenticated
+using Web::Id. An L<Web::Id::SAN> object.
+
+=item C<< uri >>
+
+The URI associated with the first valid SAN. A L<URI> object.
+
+This is a URI you can use to identify the person, organisation or
+robotic poodle holding the certificate.
+
+=item C<< profile >>
+
+Data about the certificate holder. An L<RDF::Trine::Model> object.
+Their FOAF file (probably).
+
+=item C<< valid >>
+
+Boolean.
+
+=back
+
+=head2 Methods
+
+=over
+
+=item C<< node >>
+
+Returns the same as C<uri>, but as an L<RDF::Trine::Node> object.
+
+=item C<< get(@predicates) >>
+
+Queries the C<profile> for triples of the form:
+
+  $self->node $predicate $x .
+
+And returns literal and URI values for $x, as strings.
+
+C<< $predicate >> should be an L<RDF::Trine::Node>, or a string. If a
+string, it will be expanded using L<RDF::Trine::NamespaceMap>, so you 
+can do stuff like:
+
+  my $name   = $webid->get('foaf:name', 'rdfs:label');
+  my @mboxes = $webid->get('foaf:mbox');
+
+=back
 
 =head1 BUGS
 
@@ -152,6 +229,15 @@ Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
 
 =head1 SEE ALSO
+
+L<Plack::Middleware::Auth::WebId>.
+
+L<http://webid.info/>,
+L<http://www.w3.org/wiki/WebID>,
+L<http://www.w3.org/2005/Incubator/webid/spec/>.
+
+L<CGI::Auth::FOAF_SSL> is the spiritual ancestor of L<Web::Id> though they
+share very little code, and have quite different APIs.
 
 =head1 AUTHOR
 
@@ -163,7 +249,6 @@ This software is copyright (c) 2012 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
 
 =head1 DISCLAIMER OF WARRANTIES
 
