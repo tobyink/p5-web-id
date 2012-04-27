@@ -1,0 +1,6 @@
+- Integrate WWW::Finger stuff.
+
+- Improve types stuff; maybe add a type library.
+  Haven't been able to get Any::Moose and Mo[ou]seX::Types to play nice.
+
+- Connect up to Plack.
