@@ -119,17 +119,18 @@ sub node
 
 sub get
 {
-	my ($self, $pred) = @_;
+	my $self = shift;
+	my @pred = map {
+		if (blessed $_ and $_->isa('RDF::Trine::Node'))   {   $_ }
+		else                                              { u $_ }
+	} @_;
 	
-	unless (blessed $pred and $pred->isa('RDF::Trine::Node'))
-	{
-		$pred = u($pred);
-	}
-	
-	my @results =
+	my %results =
+		map { $_ => 1 }
 		map { $_->is_resource ? $_->uri : $_->literal_value }
 		grep { $_->is_literal or $_->is_resource }
-		$self->profile->objects($self->node, $pred);
+		$self->profile->objects_for_predicate_list($self->node, @pred);
+	my @results = sort keys %results;
 	
 	wantarray ? @results : $results[0];
 }
