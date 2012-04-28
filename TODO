@@ -1,6 +1,7 @@
-- Improve types stuff; maybe add a type library.
-  Haven't been able to get Any::Moose and Mo[ou]seX::Types to play nice.
-
 - Document internal classes (Certificate, SAN, RSAKey, etc).
 
 - Some sort of optional caching mechanism - probably at the Plack end.
+
+- Some tests... at the very least for certificate parsing.
+
+- Maybe a certificate generator. I've written one before in Gambas.
