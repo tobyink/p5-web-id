@@ -157,3 +157,121 @@ sub _sort_san
 }
 
 __PACKAGE__
+__END__
+
+=head1 NAME
+
+Web::Id::Certificate - an x509 certificate
+
+=head1 SYNOPSIS
+
+ my $cert = Web::Id::Certificate->new(pem => $pem_encoded_x509);
+ foreach (@{ $cert->subject_alt_names })
+ {
+   say "SAN: ", $_->type, " = ", $_->value;
+ }
+
+=head1 DESCRIPTION
+
+=head2 Constructor
+
+=over
+
+=item C<< new >>
+
+Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+
+=back
+
+=head2 Roles
+
+This class does the following roles:
+
+=over
+
+=item * L<Web::Id::RSA> - provides C<public_exponent> and C<modulus> methods
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item C<< pem >>
+
+A PEM-encoded string for the certificate.
+
+This is usually the only attribute you want to pass to the constructor.
+Allow the others to be built automatically.
+
+=item C<< not_before >>
+
+L<DateTime> object indicating when the certificate started (or will
+start) to be valid.
+
+=item C<< not_after >>
+
+L<DateTime> object indicating when the certificate will cease (or
+has ceased) to be valid.
+
+=item C<< subject_alt_names >>
+
+An arrayref containing a list of subject alt names (L<Web::Id::SAN>
+objects) associated with the certificate. These are sorted in the order
+they'll be tried for WebId authentication. 
+
+=item C<< san_factory >>
+
+A coderef used for building L<Web::Id::SAN> objects. It's very unlikely
+you need to play with this - the default is probably OK. But changing this
+is "supported" (in so much as any of this is supported).
+
+The coderef is passed a hash (not hashref) along the lines of:
+
+ (
+   type  => 'uniformResourceIdentifier',
+   value => 'http://example.com/id/alice',
+ )
+
+=back
+
+=head2 Methods
+
+=over
+
+=item C<< timely >>
+
+Checks C<not_before> and C<not_after> against the current system time to
+indicate whether the certifixate is temporally valid. Returns a boolean.
+
+You can optionally pass it a L<DateTime> object to use instead of the
+current system time.
+
+=back
+
+=head1 BUGS
+
+Please report any bugs to
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+
+=head1 SEE ALSO
+
+L<Web::Id>, L<Crypt::X509>.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 DISCLAIMER OF WARRANTIES
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
