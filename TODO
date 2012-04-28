@@ -1,4 +1,12 @@
-- Document internal classes (Certificate, SAN, RSAKey, etc).
+- Documentation for:
+
+	Web::Id::Util (utility functions)
+	Web::Id::SAN (class)
+	Web::Id::SAN::Email (class)
+	Web::Id::SAN::URI (class)
+	Web::Id::Types (type lib)
+	Web::Id::RSAKey (class)
+	Web::Id::RSA (role)
 
 - Some sort of optional caching mechanism - probably at the Plack end.
 
