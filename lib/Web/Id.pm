@@ -8,43 +8,16 @@ BEGIN {
 	$Web::Id::VERSION   = '0.001';
 }
 
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use Web::Id::Certificate;
 use Web::Id::Util;
 
 use Any::Moose;
 
-TYPE_CONSTRAINTS:
-{
-	use Any::Moose 'Util::TypeConstraints';
-	use constant +{qw{
-		Model       Model
-		Uri         Uri
-		Cert        Cert
-		Str         Str
-		Bool        Bool
-		San         San
-	}};
-	
-	# Model
-	class_type Model, { class => 'RDF::Trine::Model' };
-	
-	# URI
-	class_type Uri, { class => 'URI' };
-	coerce Uri,
-		from Str => via { URI->new($_) };
-		
-	# Certificate
-	class_type Cert, { class => 'Web::Id::Certificate' };
-	coerce Cert,
-		from Str => via  { Web::Id::Certificate->new(pem => $_) };
-
-	# San
-	class_type San, { class => 'Web::Id::SAN' };
-}
-
 has certificate => (
 	is          => read_only,
-	isa         => Cert,
+	isa         => Certificate,
 	required    => true,
 	coerce      => true,
 	);
@@ -71,7 +44,7 @@ has valid => (
 
 has first_valid_san => (
 	is          => read_only,
-	isa         => 'San|Undef',
+	isa         => San | Undef,
 	lazy_build  => true,
 	);
 

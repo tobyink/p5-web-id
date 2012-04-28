@@ -8,6 +8,8 @@ BEGIN {
 	$Web::Id::SAN::VERSION   = '0.001';
 }
 
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use RDF::Query 2.900;
 use URI 0;
 use URI::Escape 0 qw/uri_escape/;
@@ -15,19 +17,6 @@ use Web::Id::RSAKey;
 use Web::Id::Util;
 
 use Any::Moose;
-
-TYPE_CONSTRAINTS:
-{
-	use Any::Moose 'Util::TypeConstraints';
-	use constant +{qw{
-		Model       Model
-		Str         Str
-		CodeRef     CodeRef
-	}};
-	
-	# Model
-	class_type Model, { class => 'RDF::Trine::Model' };
-}
 
 has $_ => (
 	is          => read_only,

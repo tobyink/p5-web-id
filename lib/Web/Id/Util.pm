@@ -1,6 +1,7 @@
 package Web::Id::Util;
 
 use 5.010;
+use strict;
 use utf8;
 
 use Carp qw/confess/;

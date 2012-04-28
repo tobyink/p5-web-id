@@ -8,6 +8,8 @@ BEGIN {
 	$Web::Id::SAN::URI::VERSION   = '0.001';
 }
 
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose;

@@ -8,23 +8,11 @@ BEGIN {
 	$Web::Id::RSA::VERSION   = '0.001';
 }
 
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose 'Role';
-
-TYPE_CONSTRAINTS:
-{
-	use Any::Moose 'Util::TypeConstraints';
-	use constant +{qw{
-		Str         Str
-		Bigint      Bigint
-	}};
-	
-	# Bigint
-	class_type Bigint, { class => 'Math::BigInt' };
-	coerce Bigint,
-		from Str => via { Math::BigInt->new($_) };
-}
 
 for (qw( public_exponent modulus ))
 {

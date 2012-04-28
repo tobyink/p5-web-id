@@ -16,6 +16,8 @@ BEGIN {
 	}
 }
 
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose;
@@ -23,7 +25,7 @@ extends 'Web::Id::SAN';
 
 has finger => (
 	is          => read_only,
-	isa         => 'Maybe[WWW::Finger]',
+	isa         => Finger | Undef,
 	lazy        => true,
 	builder     => '_build_finger',
 	);

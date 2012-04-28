@@ -8,10 +8,12 @@ BEGIN {
 	$Web::Id::Certificate::VERSION   = '0.001';
 }
 
-use Crypt::X509 0.50 ();  # why in the hell does this export anything?!
+use Crypt::X509 0.50 ();  # why the hell does this export anything?!
 use DateTime 0;
 use List::MoreUtils 0 qw(part);
 use MIME::Base64 0 ();
+use Any::Moose 'X::Types::Moose' => [':all'];
+use Web::Id::Types ':all';
 use Web::Id::SAN;
 use Web::Id::SAN::Email;
 use Web::Id::SAN::URI;
@@ -19,23 +21,6 @@ use Web::Id::Util;
 
 use Any::Moose;
 with 'Web::Id::RSA';
-
-TYPE_CONSTRAINTS:
-{
-	use Any::Moose 'Util::TypeConstraints';
-	use constant +{qw{
-		Str         Str
-		Num         Num
-		Datetime    Datetime
-		ArrayRef    ArrayRef
-		CodeRef     CodeRef
-	}};
-
-	# Datetime
-	class_type Datetime,	{ class => 'DateTime' };
-	coerce Datetime,
-		from Num => via { DateTime->from_epoch(epoch => $_) };
-}
 
 has pem => (
 	is          => read_only,
