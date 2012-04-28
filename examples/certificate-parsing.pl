@@ -39,3 +39,5 @@ say "Cert dates: ", $cert->not_before, " -- ", $cert->not_after;
 say "Exponent: ", $cert->public_exponent;
 say "Modulus: ", $cert->modulus;
 say "Subject alt names: ", Dumper($cert->subject_alt_names);
+say "Identifier: ", $cert->identifier;
+

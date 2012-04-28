@@ -9,6 +9,7 @@ BEGIN {
 }
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!
+use Digest::SHA1 'sha1_hex';
 use DateTime 0;
 use List::MoreUtils 0 qw(part);
 use MIME::Base64 0 ();
@@ -27,6 +28,13 @@ has pem => (
 	isa         => Str,
 	required    => true,
 	coerce      => false,
+	);
+
+has _der => (
+	is          => read_only,
+	isa         => Str,
+	required    => true,
+	lazy_build  => true,
 	);
 
 has _x509 => (
@@ -60,16 +68,28 @@ has san_factory => (
 	lazy_build  => true,
 	);
 
-sub _build__x509
+has fingerprint => (
+	is          => read_only,
+	isa         => Str,
+	lazy_build  => true,
+	);
+
+sub _build_fingerprint
 {
-	my ($self) = @_;
-	
-	my @lines = split /\n/, $self->pem;
-	my $der   = MIME::Base64::decode_base64(
+	lc sha1_hex( shift->_der );
+}
+
+sub _build__der
+{
+	my @lines = split /\n/, shift->pem;
+	MIME::Base64::decode_base64(
 		join "\n", grep { !/--(BEGIN|END) CERTIFICATE--/ } @lines
 		);
+}
 
-	return Crypt::X509->new(cert => $der);
+sub _build__x509
+{
+	return Crypt::X509->new(cert => shift->_der);
 }
 
 sub _build__rsa
@@ -203,6 +223,14 @@ A PEM-encoded string for the certificate.
 
 This is usually the only attribute you want to pass to the constructor.
 Allow the others to be built automatically.
+
+=item C<< fingerprint >>
+
+A string identifier for the certificate. It is the lower-cased
+hexadecimal SHA1 hash of the DER-encoded certificate.
+
+This is not used in WebId authentication, but may be used as an
+identifier for the certificate if you need to keep it in a cache.
 
 =item C<< not_before >>
 
