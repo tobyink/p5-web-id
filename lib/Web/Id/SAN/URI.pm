@@ -15,6 +15,8 @@ use Web::Id::Util;
 use Any::Moose;
 extends 'Web::Id::SAN';
 
+has '+type' => (default => 'uniformResourceIdentifier');
+
 override uri_object => sub
 {
 	my ($self) = @_;

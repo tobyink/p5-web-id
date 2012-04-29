@@ -23,6 +23,8 @@ use Web::Id::Util;
 use Any::Moose;
 extends 'Web::Id::SAN';
 
+has '+type' => (default => 'rfc822Name');
+
 has finger => (
 	is          => read_only,
 	isa         => Finger | Undef,

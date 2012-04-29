@@ -22,6 +22,7 @@ use Web::Id::Util;
 
 use Any::Moose;
 with 'Web::Id::RSA';
+with 'Web::Id::Certificate::Generator';
 
 has pem => (
 	is          => read_only,
@@ -208,6 +209,8 @@ Standard Moose-style constructor. (This class uses L<Any::Moose>.)
 This class does the following roles:
 
 =over
+
+=item * L<Web::Id::Certificate::Generator> - provides C<generate> method
 
 =item * L<Web::Id::RSA> - provides C<public_exponent> and C<modulus> methods
 

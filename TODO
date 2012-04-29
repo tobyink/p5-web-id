@@ -9,5 +9,3 @@
 	Web::Id::RSA (role)
 
 - Some sort of optional caching mechanism - probably at the Plack end.
-
-- Maybe a certificate generator. I've written one before in Gambas.
