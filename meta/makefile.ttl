@@ -8,28 +8,19 @@
 	:readme_from _:main ;
 	:requires
 		"Any::Moose",
-		"Carp",
 		"Class::Load",
-		"constant",
 		"Crypt::X509",
 		"DateTime",
 		"Digest::SHA1",
 		"List::MoreUtils",
-		"Math::BigInt",
 		"MIME::Base64",
 		"Mouse",
 		"MouseX::Types",
-		"parent",
-		"Plack::Util",
-		"Plack::Util::Accessor",
+		"Plack",
 		"RDF::Query",
 		"RDF::Trine",
-		"RDF::Trine::NamespaceMap",
-		"strict",
 		"Sub::Exporter",
-		"URI",
-		"URI::Escape",
-		"utf8";
+		"URI";
 	:test_requires
 		"Test::More 0.61"  .
 

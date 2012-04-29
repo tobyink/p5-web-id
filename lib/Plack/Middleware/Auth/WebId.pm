@@ -1,7 +1,7 @@
 package Plack::Middleware::Auth::WebId;
 
 use strict;
-use parent qw(Plack::Middleware);
+use base qw(Plack::Middleware);
 use Class::Load qw(load_class);
 use Plack::Util;
 use Plack::Util::Accessor qw(
