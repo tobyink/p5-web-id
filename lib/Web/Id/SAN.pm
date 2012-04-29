@@ -30,7 +30,6 @@ has model => (
 	is          => read_only,
 	isa         => Model,
 	lazy_build  => true,
-	coerce      => true,
 	);
 
 has key_factory => (

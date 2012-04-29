@@ -33,7 +33,6 @@ has profile => (
 	is          => read_only,
 	isa         => Model,
 	lazy_build  => true,
-	coerce      => true,
 	);
 
 has valid => (
