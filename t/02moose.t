@@ -1,6 +1,7 @@
-use Test::More tests => 1;
-BEGIN {
-	eval { require Moose };
-	use_ok('Web::Id');
-}
+use Test::More;
+eval { require Moose; 1 }
+	or plan skip_all => "need Moose";
+
+plan tests => 1;
+use_ok('Web::Id');
 
