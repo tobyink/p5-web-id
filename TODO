@@ -10,6 +10,4 @@
 
 - Some sort of optional caching mechanism - probably at the Plack end.
 
-- Some tests... at the very least for certificate parsing.
-
 - Maybe a certificate generator. I've written one before in Gambas.
