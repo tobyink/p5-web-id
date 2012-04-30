@@ -157,10 +157,13 @@ B<SSLVerifyClient> directive.
 
 =item * Your HTTPS server needs to expose the client certificate to Plack via C<< $env >>.
 
-If you're using Apache, then you want to set the B<SSLOptions> directive
-and enable the C<ExportCertData> option. If you're using an HTTPS proxy in
-front of a non-HTTPS web server, then you might need to be creative to find
-a way to forward this information to your backend web server.
+If you're using Apache, then you want to set the B<SSLOptions>
+directive and enable the C<ExportCertData> option, or try
+L<Plack::Middleware::Apache2::ModSSL>.
+
+If you're using an HTTPS proxy in front of a non-HTTPS web server,
+then you might need to be creative to find a way to forward this
+information to your backend web server.
 
 =item * The client browser needs to have a WebId-compatible certificate installed.
 
