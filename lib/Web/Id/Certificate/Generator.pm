@@ -83,7 +83,7 @@ sub generate
 			}->{ $_->type };
 			$type ? (join q(:), $type, $value) : ();
 		} @$sans;
-
+	
 	say $config $_ for
 		q(),
 		q([req_distinguished_name]);
@@ -98,26 +98,26 @@ sub generate
 	
 	system(
 		$openssl,
-      "req",
-      "-newkey"  => "rsa:".$key_size,
-      "-x509",
-      "-days"    => $days,
-      "-config"  => $tempdir->file('openssl.cnf'),
-      "-out"     => $tempdir->file('cert.pem'),
-      "-keyout"  => $tempdir->file('privkey.pem'),
-      "-passout" => "pass:".$passphrase,
+		"req",
+		"-newkey"  => "rsa:".$key_size,
+		"-x509",
+		"-days"    => $days,
+		"-config"  => $tempdir->file('openssl.cnf'),
+		"-out"     => $tempdir->file('cert.pem'),
+		"-keyout"  => $tempdir->file('privkey.pem'),
+		"-passout" => "pass:".$passphrase,
 		);
-
-   system(
+	
+	system(
 		$openssl,
-      "pkcs12",
-      "-export",
-      "-in"      => $tempdir->file('cert.pem'),
-      "-inkey"   => $tempdir->file('privkey.pem'),
-      "-out"     => $tempdir->file('cert.p12'),
-      "-name"    => sprintf('%s <%s>', ($subject{CN}//'Unnamed'), $sans->[0]->value), 
-      "-passin"  => "pass:".$passphrase,
-      "-passout" => "pass:".$passphrase,
+		"pkcs12",
+		"-export",
+		"-in"      => $tempdir->file('cert.pem'),
+		"-inkey"   => $tempdir->file('privkey.pem'),
+		"-out"     => $tempdir->file('cert.p12'),
+		"-name"    => sprintf('%s <%s>', ($subject{CN}//'Unnamed'), $sans->[0]->value), 
+		"-passin"  => "pass:".$passphrase,
+		"-passout" => "pass:".$passphrase,
 		);
 	
 	if (ref $dest eq 'SCALAR')
@@ -152,10 +152,10 @@ sub generate
 		$on_triple = sub { $model->add_statement(statement(@_)) };
 		$on_done   = sub { RDF::Trine::Serializer->new('RDFXML')->serialize_model_to_file($rdf_sink, $model) };
 	}
-
+	
 	my $pem  = $tempdir->file('cert.pem')->slurp;
 	my $cert = $class->new(pem => $pem);
-
+	
 	my $k = blank();
 	$on_triple->($k, u('rdf:type'), u('cert:RSAPublicKey'));
 	$on_triple->($k, u('cert:modulus'), literal($cert->modulus, undef, uu('xsd:hexBinary')));
@@ -168,7 +168,7 @@ sub generate
 	$on_done->();
 	
 	$tempdir->rmtree;
-
+	
 	return $cert;
 }
 
@@ -289,19 +289,6 @@ Date when the certificate should expire, as a L<DateTime> object.
 Defaults to 365 days.
 
 =back
-
-	my $dest       = (delete $options{cert_output})
-		or confess "need to provide cert_output option";
-	my $rdf_sink   = (delete $options{rdf_output})
-		or confess "need to provide rdf_output option";
-	
-	my %subject = (
-		C    => delete $options{subject_country},
-		ST   => delete $options{subject_region},
-		L    => delete $options{subject_locality},
-		O    => delete $options{subject_org},
-		CN   => delete $options{subject_cn},
-		);
 
 =head1 BUGS
 
