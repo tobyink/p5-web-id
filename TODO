@@ -1,7 +1,13 @@
+- Refactor:
+	* Drop RSA role, merging into RSAKey
+	* Make the _rsa attribute in Certificate public
+	* Certificate::rsa => (
+		isa => 'RSAKey',
+		handles => [qw[public_exponent modulus]]
+	);
+
 - Documentation for:
 
-	Web::Id::Util (utility functions)
-	Web::Id::SAN (class)
 	Web::Id::SAN::Email (class)
 	Web::Id::SAN::URI (class)
 	Web::Id::Types (type lib)
