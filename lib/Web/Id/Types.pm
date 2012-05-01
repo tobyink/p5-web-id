@@ -11,7 +11,7 @@ use URI;
 
 use Any::Moose
 	'X::Types' => [
-		-declare => [qw[ Bigint Certificate Datetime Finger Model San Uri ]],
+		-declare => [qw[ Bigint Certificate Datetime Finger Model Rsakey San Uri ]],
 	],
 	'X::Types::Moose' => [
 		':all',
@@ -23,7 +23,8 @@ coerce Bigint,
 		
 class_type Certificate, { class => 'Web::Id::Certificate' };
 coerce Certificate,
-	from Str, via  { Web::Id::Certificate->new(pem => $_) };
+	from HashRef, via  { Web::Id::Certificate->new(%$_) },
+	from Str,     via  { Web::Id::Certificate->new(pem => $_) };
 
 class_type Datetime,	{ class => 'DateTime' };
 coerce Datetime,
@@ -34,6 +35,10 @@ coerce Finger,
 	from Str, via { WWW::Finger->new($_) if UNIVERSAL::can('WWW::Finger', 'new') };
 
 class_type Model, { class => 'RDF::Trine::Model' };
+
+class_type Rsakey, { class => 'Web::Id::RSAKey' };
+coerce Rsakey,
+	from HashRef, via  { Web::Id::RSAKey->new(%$_) };
 
 class_type San, { class => 'Web::Id::SAN' };
 

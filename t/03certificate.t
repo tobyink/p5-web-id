@@ -71,8 +71,8 @@ is(
 	);
 
 ok(
-	$cert->public_exponent eq '65537',
-	'correct public_exponent'
+	$cert->exponent eq '65537',
+	'correct exponent'
 	);
 
 (my $modulus = <<MOD)  =~ s/\D//g;

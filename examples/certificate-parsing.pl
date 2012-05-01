@@ -36,7 +36,7 @@ PEM
 
 local $Data::Dumper::Terse = 1;
 say "Cert dates: ", $cert->not_before, " -- ", $cert->not_after;
-say "Exponent: ", $cert->public_exponent;
+say "Exponent: ", $cert->exponent;
 say "Modulus: ", $cert->modulus;
 say "Subject alt names: ", Dumper($cert->subject_alt_names);
 say "Fingerprint: ", $cert->fingerprint;

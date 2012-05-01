@@ -21,7 +21,6 @@ use Web::Id::SAN::URI;
 use Web::Id::Util;
 
 use Any::Moose;
-with 'Web::Id::RSA';
 
 has pem => (
 	is          => read_only,
@@ -43,9 +42,11 @@ has _x509 => (
 	lazy_build  => true,
 	);
 
-has _rsa => (
+has public_key => (
 	is          => read_only,
+	isa         => Rsakey,
 	lazy_build  => true,
+	handles     => [qw(modulus exponent)],
 	);
 
 has subject_alt_names => (
@@ -92,22 +93,10 @@ sub _build__x509
 	return Crypt::X509->new(cert => shift->_der);
 }
 
-sub _build__rsa
+sub _build_public_key
 {
 	my ($self) = @_;
-	return $self->_x509->pubkey_components;
-}
-
-sub _build_public_exponent
-{
-	my ($self) = @_;
-	return Math::BigInt->new($self->_rsa->{exponent});
-}
-
-sub _build_modulus
-{
-	my ($self) = @_;
-	return Math::BigInt->new($self->_rsa->{modulus});
+	Web::Id::RSAKey->new($self->_x509->pubkey_components);
 }
 
 sub _build_subject_alt_names
@@ -203,16 +192,6 @@ Standard Moose-style constructor. (This class uses L<Any::Moose>.)
 
 =back
 
-=head2 Roles
-
-This class does the following roles:
-
-=over
-
-=item * L<Web::Id::RSA> - provides C<public_exponent> and C<modulus> methods
-
-=back
-
 =head2 Attributes
 
 =over
@@ -223,6 +202,10 @@ A PEM-encoded string for the certificate.
 
 This is usually the only attribute you want to pass to the constructor.
 Allow the others to be built automatically.
+
+=item C<< public_key >>
+
+A L<Web::Id::RSAKey> object.
 
 =item C<< fingerprint >>
 
@@ -274,6 +257,14 @@ indicate whether the certifixate is temporally valid. Returns a boolean.
 
 You can optionally pass it a L<DateTime> object to use instead of the
 current system time.
+
+=item C<< exponent >>
+
+Delegated to the C<public_key> attribute.
+
+=item C<< modulus >>
+
+Delegated to the C<public_key> attribute.
 
 =back
 

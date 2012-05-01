@@ -1,17 +1,7 @@
-- Refactor:
-	* Drop RSA role, merging into RSAKey
-	* Make the _rsa attribute in Certificate public
-	* Certificate::rsa => (
-		isa => 'RSAKey',
-		handles => [qw[public_exponent modulus]]
-	);
-
 - Documentation for:
 
 	Web::Id::SAN::Email (class)
 	Web::Id::SAN::URI (class)
 	Web::Id::Types (type lib)
-	Web::Id::RSAKey (class)
-	Web::Id::RSA (role)
 
 - Some sort of optional caching mechanism - probably at the Plack end.
