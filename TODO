@@ -2,6 +2,5 @@
 
 	Web::Id::SAN::Email (class)
 	Web::Id::SAN::URI (class)
-	Web::Id::Types (type lib)
 
 - Some sort of optional caching mechanism - probably at the Plack end.
