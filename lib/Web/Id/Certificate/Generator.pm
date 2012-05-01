@@ -8,14 +8,22 @@ BEGIN {
 	$Web::Id::Certificate::Generator::VERSION   = '0.001';
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
+use Any::Moose
+	'X::Types::Moose' => [':all'],
+	'Util' => ['apply_all_roles'];
 use File::Temp qw();
 use Path::Class qw();
 use RDF::Trine qw(statement blank iri literal);
+use Web::Id::Certificate;
 use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose 'Role';
+
+sub import
+{
+	apply_all_roles('Web::Id::Certificate', __PACKAGE__);
+}
 
 sub _openssl_path
 {
@@ -185,9 +193,16 @@ Web::Id::Certificate::Generator - role for Web::Id::Certificate
 
 =head1 DESCRIPTION
 
-This is a role consumed by L<Web::Id::Certificate>. It could be
-inlined in the class, but I was trying to avoid tainting it with
-the horror that's found in this role.
+This is a role that may be applied to L<Web::Id::Certificate>. It is not
+consumed by Web::Id::Certificate by default as I was trying to avoid
+tainting the class with the horror that's found in this role.
+
+The C<import> routine of this package applies the role to
+Web::Id::Certificate, so it is sufficient to do:
+
+ use Web::Id::Certificate::Generator;
+
+You don't need to muck around with C<apply_all_roles> yourself.
 
 =head2 Constructor
 

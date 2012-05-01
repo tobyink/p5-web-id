@@ -22,7 +22,6 @@ use Web::Id::Util;
 
 use Any::Moose;
 with 'Web::Id::RSA';
-with 'Web::Id::Certificate::Generator';
 
 has pem => (
 	is          => read_only,

@@ -1,4 +1,4 @@
-use Web::Id::Certificate;
+use Web::Id::Certificate::Generator;
 
 Web::Id::Certificate->generate(
 	passphrase        => 'test1234',
