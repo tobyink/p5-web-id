@@ -305,7 +305,9 @@ Defaults to 365 days.
 
 =back
 
-=head1 BUGS
+=head1 BUGS AND LIMITATIONS
+
+Generating a privte key results in crud being spewed out on STDERR.
 
 Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
