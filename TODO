@@ -1,6 +1,1 @@
-- Documentation for:
-
-	Web::Id::SAN::Email (class)
-	Web::Id::SAN::URI (class)
-
 - Some sort of optional caching mechanism - probably at the Plack end.
