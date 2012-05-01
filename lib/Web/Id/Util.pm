@@ -74,7 +74,10 @@ sub make_bigint_from_node
 {
 	my ($node, %opts) = @_;
 	
-	state $test_hex = uu('cert:hex');
+	state $test_hex = [
+		uu('cert:hex'),
+		uu('xsd:hexBinary'),
+	];
 	
 	state $test_unsigned = [
 		uu('cert:decimal'),
@@ -170,4 +173,78 @@ sub make_bigint_from_node
 
 __PACKAGE__
 __END__
+
+=head1 NAME
+
+Web::Id::Util - utility functions used in Web-Id
+
+=head1 DESCRIPTION
+
+These are utility functions which I found useful building Web-Id.
+Many of them may also be useful creating the kind of apps that
+Web-Id is used to authenticate for.
+
+Here is a very brief summary. By default, they're B<all> exported
+to your namespace. (This modulue uses L<Sub::Exporter> so you get
+pretty good control over what gets exported.)
+
+=over
+
+=item C<true> - constant for true
+
+=item C<false> - constant for false
+
+=item C<read_only> - constant for string 'ro' (nice for Moose/Mouse)
+
+=item C<read_write> - constant for string 'rw' (nice for Moose/Mouse)
+
+=item C<< get_trine_model($url) >> - fetches a URL and parses RDF into
+an L<RDF::Trine::Model>
+
+=item C<< u($curie) >> - expands a CURIE, returning an
+L<RDF::Trine::Node::Resource>
+
+=item C<< uu($curie) >> - as per C<< u($curie) >>, but returns string
+
+=item C<< u() >> - called with no CURIE, returns the
+L<RDF::Trine::NamespaceMap> used to map CURIEs to URIs
+
+=item C<< make_bigint_from_node($node, %options) >> - makes a L<Math::BigInt>
+object from a numeric L<RDF::Trine::Node::Literal>. Supports most datatypes
+you'd care about, including hexadecimally ones. 
+
+Supported options are C<fallback> which provides a fallback node which will
+be used when C<< $node >> is non-literal; and C<fallback_type> either 'dec'
+or 'hex' which is used when parsing the fallback node, or if C<< $node >>
+is a plain literal. (The actual datatype of the fallback node is ignored for
+hysterical raisins.)
+
+=back
+
+=head1 BUGS
+
+I don't wanna hear about them unless they cause knock-on bugs for
+L<Web::Id> itself.
+
+=head1 SEE ALSO
+
+L<Web::Id>,
+L<Acme::24>.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 DISCLAIMER OF WARRANTIES
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
