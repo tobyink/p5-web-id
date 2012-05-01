@@ -189,6 +189,26 @@ Web::Id::Certificate::Generator - role for Web::Id::Certificate
 
 =head1 SYNOPSIS
 
+ use Web::Id::Certificate::Generator;
+ 
+ my %options = (
+   cert_output       => '/home/alice/webid.p12',
+   passphrase        => 's3cr3t s0urc3',
+   rdf_output        => '/home/alice/public_html/foaf.rdf',
+   subject_alt_names => [
+     Web::Id::SAN::URI->new(
+       value => 'http://example.com/~alice/foaf.rdf#me',
+     ),
+     Web::Id::SAN::Email->new(
+       value => 'alice@example.com',
+     ),
+   ],
+   subject_name      => 'Alice Jones',
+   subject_locality  => 'Lewes',
+   subject_region    => 'East Sussex',
+   subject_country   => 'GB',   # ISO 3166-1 alpha-2 code
+ );
+ 
  my $cert = Web::Id::Certificate->generate(%options);
 
 =head1 DESCRIPTION
