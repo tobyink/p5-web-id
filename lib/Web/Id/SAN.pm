@@ -72,4 +72,94 @@ sub associated_keys
 }
 
 __PACKAGE__
+__END__
+
+=head1 NAME
+
+Web::Id::SAN - represents a single name from a certificate's subjectAltName field
+
+=head1 DESCRIPTION
+
+=head2 Constructor
+
+=over
+
+=item C<< new >>
+
+Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item C<< type >>
+
+Something like 'uniformResourceIdentifier' or 'rfc822Name'. A string.
+
+=item C<< value >>
+
+The name itself. A string.
+
+=item C<< model >>
+
+An RDF::Trine::Model representing data about the subject identified by
+this name.
+
+To be useful, the C<model> needs to be buildable automatically given
+C<type> and C<value>.
+
+=item C<< key_factory >>
+
+This is similar to the C<san_factory> found in L<Web::Id::Certificate>.
+It's a coderef used to construct L<Web::Id::RSAKey> objects.
+
+=back
+
+=head2 Methods
+
+=over
+
+=item C<< uri_object >>
+
+Forces the name to take the form of a URI identifying the subject. It's
+not always an especially interesting URI.
+
+=item C<< to_string >>
+
+A printable form of the name. Not always very pretty.
+
+=item C<< associated_keys >>
+
+Finds RSA keys associated with this name in C<model>, and returns them as
+a list of L<Web::Id::RSAKey> objects.
+
+=back
+
+=head1 BUGS
+
+Please report any bugs to
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+
+=head1 SEE ALSO
+
+L<Web::Id>.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 DISCLAIMER OF WARRANTIES
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
