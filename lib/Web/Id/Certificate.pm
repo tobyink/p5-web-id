@@ -209,8 +209,6 @@ This class does the following roles:
 
 =over
 
-=item * L<Web::Id::Certificate::Generator> - provides C<generate> method
-
 =item * L<Web::Id::RSA> - provides C<public_exponent> and C<modulus> methods
 
 =back
@@ -287,6 +285,9 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
 =head1 SEE ALSO
 
 L<Web::Id>, L<Crypt::X509>.
+
+L<Web::Id::Certificate::Generator> - augments this class to add the
+ability to generate new WebId certificates.
 
 =head1 AUTHOR
 
