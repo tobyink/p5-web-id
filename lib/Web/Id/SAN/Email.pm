@@ -68,15 +68,15 @@ around associated_keys => sub
 			fallback      => $result->{hexModulus},
 			fallback_type =>'hex',
 			);
-		my $public_exponent = make_bigint_from_node(
+		my $exponent = make_bigint_from_node(
 			$result->{exponent},
 			fallback      => $result->{decExponent},
 			fallback_type =>'dec',
 			);
 				
 		push @keys, $self->key_factory->(
-			modulus         => $modulus,
-			public_exponent => $public_exponent,
+			modulus  => $modulus,
+			exponent => $exponent,
 			);
 	}
 	
