@@ -11,7 +11,7 @@ BEGIN {
 use Any::Moose 'X::Types::Moose' => [':all'];
 use Web::Id::Types ':all';
 use Web::Id::Certificate;
-use Web::Id::Util;
+use Web::Id::Util qw(:default uniq);
 
 use Any::Moose;
 
@@ -98,12 +98,10 @@ sub get
 		else                                              { u $_ }
 	} @_;
 	
-	my %results =
-		map { $_ => 1 }
+	my @results = uniq
 		map { $_->is_resource ? $_->uri : $_->literal_value }
 		grep { $_->is_literal or $_->is_resource }
 		$self->profile->objects_for_predicate_list($self->node, @pred);
-	my @results = sort keys %results;
 	
 	wantarray ? @results : $results[0];
 }

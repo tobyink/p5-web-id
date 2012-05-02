@@ -4,15 +4,21 @@ use 5.010;
 use strict;
 use utf8;
 
+BEGIN {
+	$Web::Id::Util::AUTHORITY = 'cpan:TOBYINK';
+	$Web::Id::Util::VERSION   = '0.001';
+}
+
 use Carp qw/confess/;
 use Math::BigInt 0 try => 'GMP';
 use RDF::Trine::NamespaceMap;
+use List::MoreUtils qw(:all !true !false);
 
 our (@EXPORT, @EXPORT_OK);
 BEGIN {
 	@EXPORT    = qw(make_bigint_from_node get_trine_model u uu
 	                true false read_only read_write);
-	@EXPORT_OK = (@EXPORT, qw());
+	@EXPORT_OK = (@EXPORT, grep {!/^(true|false)$/} @List::MoreUtils::EXPORT_OK);
 }
 
 use Sub::Exporter -setup => {
@@ -103,7 +109,7 @@ sub make_bigint_from_node
 	];
 	
 	state $test_decimal = uu('xsd:decimal');
-
+	
 	if ($node->is_literal)
 	{
 		given ($node->literal_datatype)
@@ -158,7 +164,7 @@ sub make_bigint_from_node
 				if defined $frac;
 				
 			$dec =~ s/[^0-9]//ig;
-			return Math::BigInt->new("$dec");			
+			return Math::BigInt->new("$dec");
 		}
 	}
 	
@@ -215,6 +221,11 @@ is a plain literal. (The actual datatype of the fallback node is ignored for
 hysterical raisins.)
 
 =back
+
+Additionally, any function from L<List::MoreUtils> can be exported by request,
+except C<true> and C<false> as they conflict with the constants above.
+
+  use Web::Id::Utils qw(:default uniq);
 
 =head1 BUGS
 

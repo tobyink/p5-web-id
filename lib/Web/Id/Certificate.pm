@@ -9,16 +9,15 @@ BEGIN {
 }
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!
-use Digest::SHA1 'sha1_hex';
 use DateTime 0;
-use List::MoreUtils 0 qw(part);
-use MIME::Base64 0 ();
 use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::Id::Types ':all';
+use Digest::SHA1 qw(sha1_hex);
+use MIME::Base64 0 qw(decode_base64);
+use Web::Id::Types qw(:all);
 use Web::Id::SAN;
 use Web::Id::SAN::Email;
 use Web::Id::SAN::URI;
-use Web::Id::Util;
+use Web::Id::Util qw(:default part);
 
 use Any::Moose;
 
@@ -83,9 +82,7 @@ sub _build_fingerprint
 sub _build__der
 {
 	my @lines = split /\n/, shift->pem;
-	MIME::Base64::decode_base64(
-		join "\n", grep { !/--(BEGIN|END) CERTIFICATE--/ } @lines
-		);
+	decode_base64(join "\n", grep { !/--(BEGIN|END) CERTIFICATE--/ } @lines);
 }
 
 sub _build__x509
