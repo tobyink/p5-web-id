@@ -8,8 +8,7 @@
 	:readme_from _:main ;
 	:requires
 		"Any::Moose",
-		"Apache2::ModSSL",    # req by P:M:Apache2::ModSSL - split out?
-		"Class::Load",        # req by P:M:Auth::WebId - split out?
+		"Class::Load",
 		"Crypt::X509",
 		"DateTime",
 		"Digest::SHA1",
@@ -19,7 +18,7 @@
 		"MouseX::Types",
 		"namespace::clean",
 		"Path::Class",
-		"Plack",              # req by P:M:*::* - split out?
+		"Plack",
 		"RDF::Query",
 		"RDF::Trine",
 		"Sub::Exporter",
