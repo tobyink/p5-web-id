@@ -50,6 +50,7 @@ has first_valid_san => (
 sub _build_valid
 {
 	my ($self) = @_;
+	return false unless $self->certificate->timely;
 	return true if defined $self->first_valid_san;
 	return false;
 }
