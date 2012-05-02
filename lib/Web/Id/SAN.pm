@@ -46,6 +46,8 @@ sub _build_model
 my $default_key_factory = sub
 {
 	my (%args) = @_;
+	return unless $args{exponent};
+	return unless $args{modulus};
 	Web::Id::RSAKey->new(%args);
 };
 

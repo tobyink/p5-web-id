@@ -65,7 +65,9 @@ sub get_trine_model
 	my ($uri, $model) = @_;
 	
 	$model //= RDF::Trine::Model->new;
-	RDF::Trine::Parser->parse_url_into_model($uri, $model);
+	eval {
+		RDF::Trine::Parser->parse_url_into_model($uri, $model);
+	};
 	
 	return $model;
 }

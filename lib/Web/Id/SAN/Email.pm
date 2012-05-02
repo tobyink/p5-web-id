@@ -74,10 +74,11 @@ around associated_keys => sub
 			fallback_type =>'dec',
 			);
 				
-		push @keys, $self->key_factory->(
+		my $key = $self->key_factory->(
 			modulus  => $modulus,
 			exponent => $exponent,
 			);
+		push @keys, $key if $key;
 	}
 	
 	return @keys;
