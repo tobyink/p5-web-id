@@ -10,6 +10,7 @@ BEGIN {
 	$Web::ID::SAN::Email::VERSION   = '0.001';
 	
 	eval {
+		no warnings;
 		require WWW::Finger;
 		WWW::Finger->VERSION('0.100');
 		$WWW_Finger++;
@@ -61,7 +62,7 @@ around associated_keys => sub
 	my ($orig, $self) = @_;
 	my @keys = $self->$orig;
 	
-	my $results = $self->query->execute( $self->model );
+	my $results = $self->_query->execute( $self->model );
 	RESULT: while (my $result = $results->next)
 	{
 		my $modulus = make_bigint_from_node(
@@ -85,7 +86,7 @@ around associated_keys => sub
 	return @keys;
 };
 
-sub query
+sub _query
 {
 	my ($self) = @_;
 	my $email = 'mailto:' . $self->value;

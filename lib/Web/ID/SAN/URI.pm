@@ -36,7 +36,7 @@ around associated_keys => sub
 	my ($orig, $self) = @_;
 	my @keys = $self->$orig;
 	
-	my $results = $self->query->execute( $self->model );
+	my $results = $self->_query->execute( $self->model );
 	RESULT: while (my $result = $results->next)
 	{
 		# trim any whitespace around modulus
@@ -65,7 +65,7 @@ around associated_keys => sub
 	return @keys;
 };
 
-sub query
+sub _query
 {
 	my ($self) = @_;
 	return RDF::Query->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );

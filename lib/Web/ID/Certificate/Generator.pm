@@ -235,7 +235,7 @@ You don't need to muck around with C<apply_all_roles> yourself.
 
 =over
 
-=item C<< generator(%options) >>
+=item C<< generate(%options) >>
 
 Generates a brand new WebID-enabled certificate.
 
