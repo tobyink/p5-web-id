@@ -82,31 +82,26 @@ sub make_bigint_from_node
 	state $test_unsigned = [
 		uu('cert:decimal'),
 		uu('cert:int'),
-		qr{^
-			http://www.w3.org/2001/XMLSchema#
-			(?:
-				unsigned(?:Long|Int|Short|Byte)
-				|positiveInteger
-				|nonNegitiveInteger
-			)
-		$}x
+		uu('xsd:unsignedLong'),
+		uu('xsd:unsignedInt'),
+		uu('xsd:unsignedShort'),
+		uu('xsd:unsignedByte'),
+		uu('xsd:positiveInteger'),
+		uu('xsd:nonNegitiveInteger'),
 	];
 	
-	state $test_signed = qr{^
-		http://www.w3.org/2001/XMLSchema#
-		(?:
-			integer
-			|negitiveInteger
-			|nonPositiveInteger
-			|long
-			|short
-			|int
-			|byte
-		)
-	$}x;
+	state $test_signed = [
+		uu('xsd:integer'),
+		uu('xsd:negitiveInteger'),
+		uu('xsd:nonPositiveInteger'),
+		uu('xsd:long'),
+		uu('xsd:short'),
+		uu('xsd:int'),
+		uu('xsd:byte'),
+	];
 	
 	state $test_decimal = uu('xsd:decimal');
-		
+
 	if ($node->is_literal)
 	{
 		given ($node->literal_datatype)
@@ -151,13 +146,11 @@ sub make_bigint_from_node
 	{
 		if ($opts{'fallback_type'} eq 'hex')
 		{
-			warn "HEX FALLBACK";
 			(my $hex = $node->literal_value) =~ s/[^0-9A-F]//ig;
 			return Math::BigInt->from_hex("0x$hex");
 		}
 		else # dec
 		{
-			warn "DECIMAL FALLBACK";
 			my ($dec, $frac) = split /\./, $node->literal_value, 2;
 			warn "Ignoring fractional part of xsd:decimal number."
 				if defined $frac;

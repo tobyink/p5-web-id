@@ -164,9 +164,14 @@ sub generate
 	my $pem  = $tempdir->file('cert.pem')->slurp;
 	my $cert = $class->new(pem => $pem);
 	
+	my $hex = sub {
+		(my $h = shift->as_hex) =~ s/^0x//;
+		$h;
+	};
+	
 	my $k = blank();
 	$on_triple->($k, u('rdf:type'), u('cert:RSAPublicKey'));
-	$on_triple->($k, u('cert:modulus'), literal($cert->modulus->as_hex, undef, uu('xsd:hexBinary')));
+	$on_triple->($k, u('cert:modulus'), literal($cert->modulus->$hex, undef, uu('xsd:hexBinary')));
 	$on_triple->($k, u('cert:exponent'), literal($cert->exponent->bstr, undef, uu('xsd:integer')));
 	foreach my $san (@$sans)
 	{
