@@ -9,6 +9,7 @@ use Plack::Util::Accessor qw(
 	certificate_env_key
 	on_unauth
 	no_object_please
+	cache
 );
 
 my $default_unauth = sub
@@ -43,17 +44,39 @@ sub call
 	my $cert  = $env->{ $self->certificate_env_key }
 		or return $self->$unauth($env);
 	
-	my $webid = $self->webid_class->new(certificate => $cert);
+	my ($webid, $was_cached) = $self->_get_webid($cert);
 	
 	if ($webid->valid)
 	{
-		$env->{WEBID}        = $webid->uri . '';
-		$env->{WEBID_OBJECT} = $webid unless $self->no_object_please;
+		$env->{WEBID}           = $webid->uri . '';
+		$env->{WEBID_OBJECT}    = $webid unless $self->no_object_please;
+		$env->{WEBID_CACHE_HIT} = $was_cached;
 		
 		return $self->app->($env);
 	}
 	
 	return $self->$unauth($env);
+}
+
+sub _get_webid
+{
+	my ($self, $cert) = @_;
+	
+	my $webid = $self->webid_class->new(certificate => $cert);
+	return ($webid, '') unless $self->cache;
+
+	# I know what you're thinking... what's the point in caching these
+	# objects, if we're already constructed it above?!
+	#
+	# Well, much of the heavy work for Web::Id is done in lazy builders.
+	# If we return a cached copy of the object, then we avoid running
+	# those builders again.
+	#
+	my $cached = $self->cache->get( $webid->certificate->fingerprint );
+	return ($cached, '1') if $cached;
+	
+	$self->cache->set($webid->certificate->fingerprint, $webid);
+	return ($webid, '0');
 }
 
 __PACKAGE__
@@ -66,22 +89,26 @@ Plack::Middleware::Auth::WebId - authentication middleware for WebId
 =head1 SYNOPSIS
 
   use Plack::Builder;
-  my $app = sub { ... };
-
+  
+  my $app   = sub { ... };
+  my $cache = CHI->new( ... );
+  
   sub unauthenticated
   {
-      my ($self, $env) = @_;
-      return [
-        403,
-        [ 'Content-Type' => 'text/plain' ],
-        [ '403 Forbidden' ],
-      ];
+    my ($self, $env) = @_;
+    return [
+      403,
+      [ 'Content-Type' => 'text/plain' ],
+      [ '403 Forbidden' ],
+    ];
   }
   
   builder
   {
-      enable "Auth::WebId", on_unauth => \&unauthenticated;
-      $app;
+    enable "Auth::WebId",
+        cache     => $cache,
+        on_unauth => \&unauthenticated;
+    $app;
   };
 
 =head1 DESCRIPTION
@@ -103,6 +130,25 @@ L<Web::Id> object.
 =head1 CONFIGURATION
 
 =over 4
+
+=item cache
+
+This may be set to an object that will act as a cache for Web::Id
+objects. 
+
+Plack::Middleware::Auth::WebId does not care what package you use for
+your caching needs. L<CHI>, L<Cache::Cache> and L<Cache> should all
+work. In fact, any package that provides a similar one-argument C<get>
+and a two-argument C<set> ought to work. Which should you use? Well
+CHI seems to be best, however it's Moose-based, so usually too slow
+for CGI applications. Use Cache::Cache for CGI, and CHI otherwise.
+
+You don't need to set a cache at all, but if there's no cache, then
+reauthentication (which is computationally expensive) happens for
+every request. Use of a cache with an expiration time of around 15
+minutes should significantly speed up the responsiveness of a
+WebId-secured site. (For forking servers you probably want a cache
+that is shared between processes, such as a memcached cache.)
 
 =item on_unauth
 

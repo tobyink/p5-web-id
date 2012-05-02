@@ -1,11 +1,18 @@
 use lib '/home/tai/perl5/hg/p5-web-id/lib';
 
+use Cache::MemoryCache;
 use Plack::Builder;
 use Data::Dumper;
 
+my $cache = Cache::MemoryCache->new({
+	namespace          => 'WebId',
+	default_expires_in => 600,
+});
+
 my $app = sub
 {
-	local $Data::Dumper::Terse = 1;
+	local $Data::Dumper::Terse    = 1;
+	local $Data::Dumper::Sortkeys = 1;
 	
 	my $env     = shift;
 	my $headers = ['Content-Type' => 'text/plain'];
@@ -16,7 +23,9 @@ my $app = sub
 
 builder
 {
-	enable "Auth::WebId";
+	enable "Auth::WebId",
+		cache            => $cache,
+		no_object_please => 1;
 	$app;
 };
 
