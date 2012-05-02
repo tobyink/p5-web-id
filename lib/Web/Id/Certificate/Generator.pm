@@ -166,8 +166,8 @@ sub generate
 	
 	my $k = blank();
 	$on_triple->($k, u('rdf:type'), u('cert:RSAPublicKey'));
-	$on_triple->($k, u('cert:modulus'), literal($cert->modulus, undef, uu('xsd:hexBinary')));
-	$on_triple->($k, u('cert:exponent'), literal($cert->exponent, undef, uu('xsd:integer')));
+	$on_triple->($k, u('cert:modulus'), literal($cert->modulus->as_hex, undef, uu('xsd:hexBinary')));
+	$on_triple->($k, u('cert:exponent'), literal($cert->exponent->bstr, undef, uu('xsd:integer')));
 	foreach my $san (@$sans)
 	{
 		next unless $san->type eq 'uniformResourceIdentifier';
