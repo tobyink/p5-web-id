@@ -17,6 +17,7 @@
 		"MIME::Base64",
 		"Mouse",
 		"MouseX::Types",
+		"namespace::clean",
 		"Path::Class",
 		"Plack",              # req by P:M:*::* - split out?
 		"RDF::Query",
