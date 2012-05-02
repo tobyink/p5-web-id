@@ -13,6 +13,7 @@ use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose;
+use namespace::clean -except => 'meta';
 
 for (qw( exponent modulus ))
 {

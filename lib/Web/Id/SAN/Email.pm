@@ -6,8 +6,8 @@ use utf8;
 our $WWW_Finger = 0;
 
 BEGIN {
-	$Web::Id::Email::URI::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::Email::URI::VERSION   = '0.001';
+	$Web::Id::SAN::Email::AUTHORITY = 'cpan:TOBYINK';
+	$Web::Id::SAN::Email::VERSION   = '0.001';
 	
 	eval {
 		require WWW::Finger;
@@ -21,6 +21,7 @@ use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose;
+use namespace::clean -except => 'meta';
 extends 'Web::Id::SAN';
 
 has '+type' => (default => 'rfc822Name');

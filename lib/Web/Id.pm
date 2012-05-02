@@ -14,6 +14,7 @@ use Web::Id::Certificate;
 use Web::Id::Util qw(:default uniq);
 
 use Any::Moose;
+use namespace::clean -except => 'meta';
 
 has certificate => (
 	is          => read_only,

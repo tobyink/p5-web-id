@@ -19,7 +19,24 @@ use Web::Id::SAN::Email;
 use Web::Id::SAN::URI;
 use Web::Id::Util qw(:default part);
 
+# Partly sorts a list of Web::Id::SAN objects,
+# prioritising URIs and Email addresses.
+#
+# Note: placing this deliberately before namespace::clean.
+#
+sub _sort_san
+{
+	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
+	part {
+		if ($_->isa('Web::Id::SAN::URI'))       { 0 }
+		elsif ($_->isa('Web::Id::SAN::Email'))  { 1 }
+		else                                    { 2 }
+	}
+	@_;
+}
+
 use Any::Moose;
+use namespace::clean -except => 'meta';
 
 has pem => (
 	is          => read_only,
@@ -147,19 +164,6 @@ sub timely
 	return if $now < $self->not_before;
 	
 	return $self;
-}
-
-# Partly sorts a list of Web::Id::SAN objects,
-# prioritising URIs and Email addresses.
-sub _sort_san
-{
-	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
-	part {
-		if ($_->isa('Web::Id::SAN::URI'))       { 0 }
-		elsif ($_->isa('Web::Id::SAN::Email'))  { 1 }
-		else                                    { 2 }
-	}
-	@_;
 }
 
 __PACKAGE__

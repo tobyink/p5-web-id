@@ -19,6 +19,7 @@ use Web::Id::Types ':all';
 use Web::Id::Util;
 
 use Any::Moose 'Role';
+use namespace::clean -except => 'meta';
 
 sub import
 {
@@ -157,8 +158,9 @@ sub generate
 	else
 	{
 		my $model = RDF::Trine::Model->new;
+		my $fh    = Path::Class::File->new($rdf_sink)->openw;
 		$on_triple = sub { $model->add_statement(statement(@_)) };
-		$on_done   = sub { RDF::Trine::Serializer->new('RDFXML')->serialize_model_to_file($rdf_sink, $model) };
+		$on_done   = sub { RDF::Trine::Serializer->new('RDFXML')->serialize_model_to_file($fh, $model) };
 	}
 	
 	my $pem  = $tempdir->file('cert.pem')->slurp;

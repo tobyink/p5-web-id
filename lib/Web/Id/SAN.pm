@@ -17,6 +17,7 @@ use Web::Id::RSAKey;
 use Web::Id::Util;
 
 use Any::Moose;
+use namespace::clean -except => 'meta';
 
 has $_ => (
 	is          => read_only,
