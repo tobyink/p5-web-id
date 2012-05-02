@@ -1,9 +1,1 @@
 - Some sort of optional caching mechanism - probably at the Plack end.
-
-- Create a test that:
-	* launches test HTTPS server
-	* gets its port number
-	* creates webid cert with URI on that server
-	* configures test HTTP server to respond to request for graph
-	* does a Web::Id->new(pem => $pem)
-	* (can't do the full HTTPS stuff because test http server only does http)
