@@ -1,11 +1,11 @@
-package Web::Id::Certificate::Generator;
+package Web::ID::Certificate::Generator;
 
 use 5.010;
 use utf8;
 
 BEGIN {
-	$Web::Id::Certificate::Generator::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::Certificate::Generator::VERSION   = '0.001';
+	$Web::ID::Certificate::Generator::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::Certificate::Generator::VERSION   = '0.001';
 }
 
 use Any::Moose
@@ -14,16 +14,16 @@ use Any::Moose
 use File::Temp qw();
 use Path::Class qw();
 use RDF::Trine qw(statement blank iri literal);
-use Web::Id::Certificate;
-use Web::Id::Types ':all';
-use Web::Id::Util;
+use Web::ID::Certificate;
+use Web::ID::Types ':all';
+use Web::ID::Util;
 
 use Any::Moose 'Role';
 use namespace::clean -except => 'meta';
 
 sub import
 {
-	apply_all_roles('Web::Id::Certificate', __PACKAGE__);
+	apply_all_roles('Web::ID::Certificate', __PACKAGE__);
 }
 
 sub _openssl_path
@@ -192,21 +192,21 @@ __END__
 
 =head1 NAME
 
-Web::Id::Certificate::Generator - role for Web::Id::Certificate
+Web::ID::Certificate::Generator - role for Web::ID::Certificate
 
 =head1 SYNOPSIS
 
- use Web::Id::Certificate::Generator;
+ use Web::ID::Certificate::Generator;
  
  my %options = (
    cert_output       => '/home/alice/webid.p12',
    passphrase        => 's3cr3t s0urc3',
    rdf_output        => '/home/alice/public_html/foaf.rdf',
    subject_alt_names => [
-     Web::Id::SAN::URI->new(
+     Web::ID::SAN::URI->new(
        value => 'http://example.com/~alice/foaf.rdf#me',
      ),
-     Web::Id::SAN::Email->new(
+     Web::ID::SAN::Email->new(
        value => 'alice@example.com',
      ),
    ],
@@ -216,18 +216,18 @@ Web::Id::Certificate::Generator - role for Web::Id::Certificate
    subject_country   => 'GB',   # ISO 3166-1 alpha-2 code
  );
  
- my $cert = Web::Id::Certificate->generate(%options);
+ my $cert = Web::ID::Certificate->generate(%options);
 
 =head1 DESCRIPTION
 
-This is a role that may be applied to L<Web::Id::Certificate>. It is not
-consumed by Web::Id::Certificate by default as I was trying to avoid
+This is a role that may be applied to L<Web::ID::Certificate>. It is not
+consumed by Web::ID::Certificate by default as I was trying to avoid
 tainting the class with the horror that's found in this role.
 
 The C<import> routine of this package applies the role to
-Web::Id::Certificate, so it is sufficient to do:
+Web::ID::Certificate, so it is sufficient to do:
 
- use Web::Id::Certificate::Generator;
+ use Web::ID::Certificate::Generator;
 
 You don't need to muck around with C<apply_all_roles> yourself.
 
@@ -276,8 +276,8 @@ This is a required option.
 
 =item * C<subject_alt_names>
 
-List of L<Web::Id::SAN> objects to generate the certificate's
-subjectAltNames field. You want at least one L<Web::Id::SAN::URI>
+List of L<Web::ID::SAN> objects to generate the certificate's
+subjectAltNames field. You want at least one L<Web::ID::SAN::URI>
 in there.
 
 This is a required option.
@@ -334,14 +334,16 @@ Defaults to 365 days.
 
 =head1 BUGS AND LIMITATIONS
 
-Generating a privte key results in crud being spewed out on STDERR.
+Generating the private key results in shedloads of nasty crud being spewed
+out on STDERR.
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id::Certificate>.
+L<Web::ID>,
+L<Web::ID::Certificate>.
 
 =head1 AUTHOR
 

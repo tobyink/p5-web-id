@@ -3,12 +3,12 @@ use lib "../lib";
 use lib "lib";
 use Data::Dumper;
 #use Moose ();
-use Web::Id::Certificate;
-use Web::Id::SAN;
-use Web::Id::SAN::Email;
-use Web::Id::SAN::URI;
+use Web::ID::Certificate;
+use Web::ID::SAN;
+use Web::ID::SAN::Email;
+use Web::ID::SAN::URI;
 
-my $cert = Web::Id::Certificate->new( pem => <<PEM );
+my $cert = Web::ID::Certificate->new( pem => <<PEM );
 -----BEGIN CERTIFICATE-----
 MIIDwjCCAyugAwIBAgIBADANBgkqhkiG9w0BAQUFADCBiDELMAkGA1UEBhMCR0Ix
 FDASBgNVBAgTC0Vhc3QgU3Vzc2V4MQ4wDAYDVQQHEwVMZXdlczEVMBMGA1UEChMM

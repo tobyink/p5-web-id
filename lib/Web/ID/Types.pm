@@ -1,4 +1,4 @@
-package Web::Id::Types;
+package Web::ID::Types;
 
 use 5.010;
 use strict;
@@ -21,10 +21,10 @@ class_type Bigint, { class => 'Math::BigInt' };
 coerce Bigint,
 	from Str, via { Math::BigInt->new($_) };
 		
-class_type Certificate, { class => 'Web::Id::Certificate' };
+class_type Certificate, { class => 'Web::ID::Certificate' };
 coerce Certificate,
-	from HashRef, via  { Web::Id::Certificate->new(%$_) },
-	from Str,     via  { Web::Id::Certificate->new(pem => $_) };
+	from HashRef, via  { Web::ID::Certificate->new(%$_) },
+	from Str,     via  { Web::ID::Certificate->new(pem => $_) };
 
 class_type Datetime,	{ class => 'DateTime' };
 coerce Datetime,
@@ -36,11 +36,11 @@ coerce Finger,
 
 class_type Model, { class => 'RDF::Trine::Model' };
 
-class_type Rsakey, { class => 'Web::Id::RSAKey' };
+class_type Rsakey, { class => 'Web::ID::RSAKey' };
 coerce Rsakey,
-	from HashRef, via  { Web::Id::RSAKey->new(%$_) };
+	from HashRef, via  { Web::ID::RSAKey->new(%$_) };
 
-class_type San, { class => 'Web::Id::SAN' };
+class_type San, { class => 'Web::ID::SAN' };
 
 class_type Uri, { class => 'URI' };
 coerce Uri,
@@ -52,7 +52,7 @@ __END__
 
 =head1 NAME
 
-Web::Id::Types - type library for Web::Id and friends
+Web::ID::Types - type library for Web::ID and friends
 
 =head1 DESCRIPTION
 
@@ -84,11 +84,11 @@ L<MooseX::Types> type library, or a L<MouseX::Types> type library.
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id>.
+L<Web::ID>.
 
 =head1 AUTHOR
 

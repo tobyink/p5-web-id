@@ -1,59 +1,34 @@
-package Web::Id::SAN::Email;
+package Web::ID::SAN::URI;
 
 use 5.010;
 use utf8;
 
-our $WWW_Finger = 0;
-
 BEGIN {
-	$Web::Id::SAN::Email::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::SAN::Email::VERSION   = '0.001';
-	
-	eval {
-		require WWW::Finger;
-		WWW::Finger->VERSION('0.100');
-		$WWW_Finger++;
-	}
+	$Web::ID::SAN::URI::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::SAN::URI::VERSION   = '0.001';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::Id::Types ':all';
-use Web::Id::Util;
+use Web::ID::Types ':all';
+use Web::ID::Util;
 
 use Any::Moose;
 use namespace::clean -except => 'meta';
-extends 'Web::Id::SAN';
+extends 'Web::ID::SAN';
 
-has '+type' => (default => 'rfc822Name');
+has '+type' => (default => 'uniformResourceIdentifier');
 
-has finger => (
-	is          => read_only,
-	isa         => Finger | Undef,
-	lazy        => true,
-	builder     => '_build_finger',
-	);
-
-sub _build_finger
+override uri_object => sub
 {
 	my ($self) = @_;
-	return WWW::Finger->new($self->value);
-}
+	return URI->new($self->value);
+};
 
 around _build_model => sub
 {
 	my ($orig, $self) = @_;
-	
-	if (my $finger = $self->finger)
-	{
-		if ($finger->endpoint)
-		{
-			my $store = RDF::Trine::Store::SPARQL->new($finger->endpoint);
-			return RDF::Trine::Model->new($store);
-		}
-		return $finger->graph;
-	}
-	
-	$self->$orig();
+	my $model = $self->$orig;
+	return get_trine_model($self->value => $model);
 };
 
 around associated_keys => sub
@@ -64,6 +39,11 @@ around associated_keys => sub
 	my $results = $self->query->execute( $self->model );
 	RESULT: while (my $result = $results->next)
 	{
+		# trim any whitespace around modulus
+		# (HACK for MyProfile WebIDs)
+		# Should probably be in ::Util.
+		$result->{modulus}->[0] =~ s/(^\s+)|(\s+$)//g;
+		
 		my $modulus = make_bigint_from_node(
 			$result->{modulus},
 			fallback      => $result->{hexModulus},
@@ -74,7 +54,7 @@ around associated_keys => sub
 			fallback      => $result->{decExponent},
 			fallback_type =>'dec',
 			);
-				
+		
 		my $key = $self->key_factory->(
 			modulus  => $modulus,
 			exponent => $exponent,
@@ -88,13 +68,10 @@ around associated_keys => sub
 sub query
 {
 	my ($self) = @_;
-	my $email = 'mailto:' . $self->value;
-	return RDF::Query->new( sprintf(<<'SPARQL', (($email)x4)) );
+	return RDF::Query->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );
 PREFIX cert: <http://www.w3.org/ns/auth/cert#>
 PREFIX rsa: <http://www.w3.org/ns/auth/rsa#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 SELECT
-	?webid
 	?modulus
 	?exponent
 	?decExponent
@@ -102,34 +79,28 @@ SELECT
 WHERE
 {
 	{
-		?webid foaf:mbox <%s> .
 		?key
-			cert:identity ?webid ;
+			cert:identity <%s> ;
 			rsa:modulus ?modulus ;
 			rsa:public_exponent ?exponent .
 	}
 	UNION
 	{
-		?webid
-			foaf:mbox <%s> ;
-			cert:key ?key .
+		<%s> cert:key ?key .
 		?key
 			rsa:modulus ?modulus ;
 			rsa:public_exponent ?exponent .
 	}
 	UNION
 	{
-		?webid foaf:mbox <%s> .
 		?key
-			cert:identity ?webid ;
+			cert:identity <%s> ;
 			cert:modulus ?modulus ;
 			cert:exponent ?exponent .
 	}
 	UNION
 	{
-		?webid
-			foaf:mbox <%s> ;
-			cert:key ?key .
+		<%s> cert:key ?key .
 		?key
 			cert:modulus ?modulus ;
 			cert:exponent ?exponent .
@@ -145,22 +116,21 @@ __END__
 
 =head1 NAME
 
-Web::Id::SAN::Email - represents subjectAltNames that are e-mail addresses
+Web::ID::SAN::URI - represents subjectAltNames that are URIs
 
 =head1 DESCRIPTION
 
-This module uses L<WWW::Finger> (if installed) to attempt to locate some
-RDF data about the holder of the given e-mail address. It is probably not
-especially interoperable with other WebId implementations.
+subjectAltNames such as these are the foundation of the whole WebID idea.
 
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id::SAN>.
+L<Web::ID>,
+L<Web::ID::SAN>.
 
 =head1 AUTHOR
 

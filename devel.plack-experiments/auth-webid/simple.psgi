@@ -5,7 +5,7 @@ use Plack::Builder;
 use Data::Dumper;
 
 my $cache = Cache::MemoryCache->new({
-	namespace          => 'WebId',
+	namespace          => 'WebID',
 	default_expires_in => 600,
 });
 
@@ -23,7 +23,7 @@ my $app = sub
 
 builder
 {
-	enable "Auth::WebId",
+	enable "Auth::WebID",
 		cache            => $cache,
 		no_object_please => 1;
 	$app;

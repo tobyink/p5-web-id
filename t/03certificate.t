@@ -1,7 +1,7 @@
 use Test::More tests => 18;
-use Web::Id::Certificate;
+use Web::ID::Certificate;
 
-my $cert = new_ok 'Web::Id::Certificate' => [pem => <<PEM];
+my $cert = new_ok 'Web::ID::Certificate' => [pem => <<PEM];
 -----BEGIN CERTIFICATE-----
 MIIDwjCCAyugAwIBAgIBADANBgkqhkiG9w0BAQUFADCBiDELMAkGA1UEBhMCR0Ix
 FDASBgNVBAgTC0Vhc3QgU3Vzc2V4MQ4wDAYDVQQHEwVMZXdlczEVMBMGA1UEChMM
@@ -90,19 +90,19 @@ ok(
 
 isa_ok(
 	$cert->subject_alt_names->[$_],
-	'Web::Id::SAN',
+	'Web::ID::SAN',
 	"SAN $_",
 	) for 0..2;
 
 isa_ok(
 	$cert->subject_alt_names->[0],
-	'Web::Id::SAN::URI',
+	'Web::ID::SAN::URI',
 	"SAN 0",
 	);
 
 isa_ok(
 	$cert->subject_alt_names->[$_],
-	'Web::Id::SAN::Email',
+	'Web::ID::SAN::Email',
 	"SAN $_",
 	) for 1..2;
 

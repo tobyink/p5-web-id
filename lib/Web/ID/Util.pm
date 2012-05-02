@@ -1,12 +1,12 @@
-package Web::Id::Util;
+package Web::ID::Util;
 
 use 5.010;
 use strict;
 use utf8;
 
 BEGIN {
-	$Web::Id::Util::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::Util::VERSION   = '0.001';
+	$Web::ID::Util::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::Util::VERSION   = '0.001';
 }
 
 use Carp qw/confess/;
@@ -177,13 +177,13 @@ __END__
 
 =head1 NAME
 
-Web::Id::Util - utility functions used in Web-Id
+Web::ID::Util - utility functions used in Web-ID
 
 =head1 DESCRIPTION
 
-These are utility functions which I found useful building Web-Id.
+These are utility functions which I found useful building Web-ID.
 Many of them may also be useful creating the kind of apps that
-Web-Id is used to authenticate for.
+Web-ID is used to authenticate for.
 
 Here is a very brief summary. By default, they're B<all> exported
 to your namespace. (This modulue uses L<Sub::Exporter> so you get
@@ -225,16 +225,16 @@ hysterical raisins.)
 Additionally, any function from L<List::MoreUtils> can be exported by request,
 except C<true> and C<false> as they conflict with the constants above.
 
-  use Web::Id::Utils qw(:default uniq);
+  use Web::ID::Utils qw(:default uniq);
 
 =head1 BUGS
 
 I don't wanna hear about them unless they cause knock-on bugs for
-L<Web::Id> itself.
+L<Web::ID> itself.
 
 =head1 SEE ALSO
 
-L<Web::Id>,
+L<Web::ID>,
 L<Acme::24>.
 
 =head1 AUTHOR

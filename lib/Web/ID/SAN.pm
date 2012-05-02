@@ -1,20 +1,20 @@
-package Web::Id::SAN;
+package Web::ID::SAN;
 
 use 5.010;
 use utf8;
 
 BEGIN {
-	$Web::Id::SAN::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::SAN::VERSION   = '0.001';
+	$Web::ID::SAN::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::SAN::VERSION   = '0.001';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::Id::Types ':all';
+use Web::ID::Types ':all';
 use RDF::Query 2.900;
 use URI 0;
 use URI::Escape 0 qw/uri_escape/;
-use Web::Id::RSAKey;
-use Web::Id::Util;
+use Web::ID::RSAKey;
+use Web::ID::Util;
 
 use Any::Moose;
 use namespace::clean -except => 'meta';
@@ -49,7 +49,7 @@ my $default_key_factory = sub
 	my (%args) = @_;
 	return unless $args{exponent};
 	return unless $args{modulus};
-	Web::Id::RSAKey->new(%args);
+	Web::ID::RSAKey->new(%args);
 };
 
 sub _build_key_factory
@@ -79,7 +79,7 @@ __END__
 
 =head1 NAME
 
-Web::Id::SAN - represents a single name from a certificate's subjectAltName field
+Web::ID::SAN - represents a single name from a certificate's subjectAltName field
 
 =head1 DESCRIPTION
 
@@ -115,8 +115,8 @@ C<type> and C<value>.
 
 =item C<< key_factory >>
 
-This is similar to the C<san_factory> found in L<Web::Id::Certificate>.
-It's a coderef used to construct L<Web::Id::RSAKey> objects.
+This is similar to the C<san_factory> found in L<Web::ID::Certificate>.
+It's a coderef used to construct L<Web::ID::RSAKey> objects.
 
 =back
 
@@ -136,18 +136,21 @@ A printable form of the name. Not always very pretty.
 =item C<< associated_keys >>
 
 Finds RSA keys associated with this name in C<model>, and returns them as
-a list of L<Web::Id::RSAKey> objects.
+a list of L<Web::ID::RSAKey> objects.
 
 =back
 
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id>.
+L<Web::ID>,
+L<Web::ID::Certificate>,
+L<Web::ID::SAN::Email>,
+L<Web::ID::SAN::URI>.
 
 =head1 AUTHOR
 

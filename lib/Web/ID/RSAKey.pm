@@ -1,16 +1,16 @@
-package Web::Id::RSAKey;
+package Web::ID::RSAKey;
 
 use 5.010;
 use utf8;
 
 BEGIN {
-	$Web::Id::RSAKey::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::RSAKey::VERSION   = '0.001';
+	$Web::ID::RSAKey::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::RSAKey::VERSION   = '0.001';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::Id::Types ':all';
-use Web::Id::Util;
+use Web::ID::Types ':all';
+use Web::ID::Util;
 
 use Any::Moose;
 use namespace::clean -except => 'meta';
@@ -44,7 +44,7 @@ __END__
 
 =head1 NAME
 
-Web::Id::RSAKey - an RSA key
+Web::ID::RSAKey - an RSA key
 
 =head1 DESCRIPTION
 
@@ -85,11 +85,11 @@ Returns true iff this key is the same as that key.
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id>.
+L<Web::ID>, L<Web::ID::Certificate>.
 
 =head1 AUTHOR
 

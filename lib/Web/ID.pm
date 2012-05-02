@@ -1,17 +1,17 @@
-package Web::Id;
+package Web::ID;
 
 use 5.010;
 use utf8;
 
 BEGIN {
-	$Web::Id::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::VERSION   = '0.001';
+	$Web::ID::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::VERSION   = '0.001';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::Id::Types ':all';
-use Web::Id::Certificate;
-use Web::Id::Util qw(:default uniq);
+use Web::ID::Types ':all';
+use Web::ID::Certificate;
+use Web::ID::Util qw(:default uniq);
 
 use Any::Moose;
 use namespace::clean -except => 'meta';
@@ -112,11 +112,11 @@ __END__
 
 =head1 NAME
 
-Web::Id - implementation of WebId (a.k.a. FOAF+SSL)
+Web::ID - implementation of WebID (a.k.a. FOAF+SSL)
 
 =head1 SYNOPSIS
 
- my $webid = Web::Id->new(certificate => $pem_encoded_x509);
+ my $webid = Web::ID->new(certificate => $pem_encoded_x509);
  if ($webid->valid)
  {
    say "Authenticated as: ", $webid->uri;
@@ -140,7 +140,7 @@ Standard Moose-style constructor. (This class uses L<Any::Moose>.)
 
 =item C<< certificate >>
 
-A L<Web::Id::Certificate> object representing and x509 certificate,
+A L<Web::ID::Certificate> object representing and x509 certificate,
 though a PEM-encoded string will be coerced.
 
 This is usually the only attribute you want to pass to the constructor.
@@ -150,7 +150,7 @@ Allow the others to be built automatically.
 
 Probably fairly uninteresting. This is the first subjectAltName value
 found in the certificate that could be successfully authenticated
-using Web::Id. An L<Web::Id::SAN> object.
+using Web::ID. An L<Web::ID::SAN> object.
 
 =item C<< uri >>
 
@@ -198,18 +198,28 @@ can do stuff like:
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Plack::Middleware::Auth::WebId>.
+L<Web::ID::FAQ>.
 
+L<Web::ID::Certificate>,
+L<Plack::Middleware::Auth::WebID>.
+
+L<RDF::ACL> provides an access control system that complements WebID.
+
+L<CGI::Auth::FOAF_SSL> is the spiritual ancestor of this module though
+they share very little code, and have quite different APIs.
+
+General WebID information:
 L<http://webid.info/>,
 L<http://www.w3.org/wiki/WebID>,
-L<http://www.w3.org/2005/Incubator/webid/spec/>.
+L<http://www.w3.org/2005/Incubator/webid/spec/>,
+L<http://lists.foaf-project.org/mailman/listinfo/foaf-protocols>.
 
-L<CGI::Auth::FOAF_SSL> is the spiritual ancestor of L<Web::Id> though they
-share very little code, and have quite different APIs.
+Mailing list for general Perl RDF/SemWeb discussion and support:
+L<http://www.perlrdf.org/>.
 
 =head1 AUTHOR
 
@@ -221,7 +231,7 @@ Thanks to Kjetil Kjernsmo (cpan:KJETILK) for persuading me to port my old
 CGI-specific implementaton of this to Plack.
 
 Thanks to Henry Story, Melvin Carvalho, Bruno Harbulot, Ian Jacobi and
-many others for developing WebId from a poorly thought out idea to a 
+many others for developing WebID from a poorly thought out idea to a 
 clever, yet simple and practical authentication protocol.
 
 Thanks to Gregory Williams (cpan:GWILLIAMS), Tatsuhiko Miyagawa

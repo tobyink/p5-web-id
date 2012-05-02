@@ -1,7 +1,7 @@
 use Test::More;
 use Test::Pod::Coverage;
 
-my @modules = qw(Web::Id);
+my @modules = qw(Web::ID);
 pod_coverage_ok($_, "$_ is covered")
 	foreach @modules;
 done_testing(scalar @modules);

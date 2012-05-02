@@ -3,9 +3,9 @@ use lib "../lib";
 use lib "lib";
 use Data::Dumper;
 #use Moose ();
-use Web::Id;
+use Web::ID;
 
-my $id = Web::Id->new( certificate => <<PEM );
+my $id = Web::ID->new( certificate => <<PEM );
 -----BEGIN CERTIFICATE-----
 MIIDwjCCAyugAwIBAgIBADANBgkqhkiG9w0BAQUFADCBiDELMAkGA1UEBhMCR0Ix
 FDASBgNVBAgTC0Vhc3QgU3Vzc2V4MQ4wDAYDVQQHEwVMZXdlczEVMBMGA1UEChMM

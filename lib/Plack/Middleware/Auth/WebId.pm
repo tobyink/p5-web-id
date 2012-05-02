@@ -1,4 +1,4 @@
-package Plack::Middleware::Auth::WebId;
+package Plack::Middleware::Auth::WebID;
 
 use strict;
 use base qw(Plack::Middleware);
@@ -27,13 +27,13 @@ sub prepare_app
 	$self->certificate_env_key('SSL_CLIENT_CERT')
 		unless defined $self->certificate_env_key;
 	
-	$self->webid_class('Web::Id')
+	$self->webid_class('Web::ID')
 		unless defined $self->webid_class;
 	
 	$self->on_unauth($default_unauth)
 		unless defined $self->on_unauth;
 	
-	load_class('Web::Id');
+	load_class('Web::ID');
 }
 
 sub call
@@ -68,7 +68,7 @@ sub _get_webid
 	# I know what you're thinking... what's the point in caching these
 	# objects, if we're already constructed it above?!
 	#
-	# Well, much of the heavy work for Web::Id is done in lazy builders.
+	# Well, much of the heavy work for Web::ID is done in lazy builders.
 	# If we return a cached copy of the object, then we avoid running
 	# those builders again.
 	#
@@ -84,7 +84,7 @@ __END__
 
 =head1 NAME
 
-Plack::Middleware::Auth::WebId - authentication middleware for WebId
+Plack::Middleware::Auth::WebID - authentication middleware for WebID
 
 =head1 SYNOPSIS
 
@@ -105,7 +105,7 @@ Plack::Middleware::Auth::WebId - authentication middleware for WebId
   
   builder
   {
-    enable "Auth::WebId",
+    enable "Auth::WebID",
         cache     => $cache,
         on_unauth => \&unauthenticated;
     $app;
@@ -113,11 +113,11 @@ Plack::Middleware::Auth::WebId - authentication middleware for WebId
 
 =head1 DESCRIPTION
 
-Plack::Middleware::Auth::WebId is a WebId handler for Plack.
+Plack::Middleware::Auth::WebID is a WebID handler for Plack.
 
 If authentication is successful, then the handler sets C<< $env->{WEBID} >>
-to the user's WebId URI, and sets C<< $env->{WEBID_OBJECT} >> to a
-L<Web::Id> object.
+to the user's WebID URI, and sets C<< $env->{WEBID_OBJECT} >> to a
+L<Web::ID> object.
 
 =begin private
 
@@ -133,10 +133,10 @@ L<Web::Id> object.
 
 =item cache
 
-This may be set to an object that will act as a cache for Web::Id
+This may be set to an object that will act as a cache for Web::ID
 objects. 
 
-Plack::Middleware::Auth::WebId does not care what package you use for
+Plack::Middleware::Auth::WebID does not care what package you use for
 your caching needs. L<CHI>, L<Cache::Cache> and L<Cache> should all
 work. In fact, any package that provides a similar one-argument C<get>
 and a two-argument C<set> ought to work. Which should you use? Well
@@ -147,7 +147,7 @@ You don't need to set a cache at all, but if there's no cache, then
 reauthentication (which is computationally expensive) happens for
 every request. Use of a cache with an expiration time of around 15
 minutes should significantly speed up the responsiveness of a
-WebId-secured site. (For forking servers you probably want a cache
+WebID-secured site. (For forking servers you probably want a cache
 that is shared between processes, such as a memcached cache.)
 
 =item on_unauth
@@ -161,13 +161,13 @@ but setting C<< $env->{WEBID} >> to the empty string.
 
 =item webid_class
 
-Name of an alternative class to use for WebId authentication instead
-of L<Web::Id>. Note that any such class would need to provide a compatible
+Name of an alternative class to use for WebID authentication instead
+of L<Web::ID>. Note that any such class would need to provide a compatible
 C<new> constructor.
 
 =item certificate_env_key
 
-The key within C<< $env >> where Plack::Middleware::Auth::WebId can find
+The key within C<< $env >> where Plack::Middleware::Auth::WebID can find
 a PEM-encoded client SSL certificate.
 
 Apache keeps this information in C<< $env->{'SSL_CLIENT_CERT'} >>, so
@@ -182,7 +182,7 @@ still be set as usual.
 
 =head1 SERVER SUPPORT
 
-WebId is an authentication system based on the Semantic Web and HTTPS.
+WebID is an authentication system based on the Semantic Web and HTTPS.
 It relies on client certificates (but not on certification authorities;
 self-signed certificates are OK).
 
@@ -211,7 +211,7 @@ If you're using an HTTPS proxy in front of a non-HTTPS web server,
 then you might need to be creative to find a way to forward this
 information to your backend web server.
 
-=item * The client browser needs to have a WebId-compatible certificate installed.
+=item * The client browser needs to have a WebID-compatible certificate installed.
 
 Nuff said.
 
@@ -220,15 +220,22 @@ Nuff said.
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Plack>, L<Web::Id>.
+L<Plack>, L<Web::ID>, L<Web::ID::FAQ>.
 
+General WebID information:
 L<http://webid.info/>,
 L<http://www.w3.org/wiki/WebID>,
-L<http://www.w3.org/2005/Incubator/webid/spec/>.
+L<http://www.w3.org/2005/Incubator/webid/spec/>,
+L<http://lists.foaf-project.org/mailman/listinfo/foaf-protocols>.
+
+Apache mod_ssl:
+L<Plack::Middleware::Apache2::ModSSL>,
+L<Apache2::ModSSL>,
+L<http://httpd.apache.org/docs/2.0/mod/mod_ssl.html>.
 
 =head1 AUTHOR
 

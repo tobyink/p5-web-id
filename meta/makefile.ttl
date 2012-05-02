@@ -2,7 +2,7 @@
 
 @prefix : <http://purl.org/NET/cpan-uri/terms#> .
 
-<http://purl.org/NET/cpan-uri/dist/Web-Id/project>
+<http://purl.org/NET/cpan-uri/dist/Web-ID/project>
 	:perl_version_from _:main ;
 	:version_from _:main ;
 	:readme_from _:main ;

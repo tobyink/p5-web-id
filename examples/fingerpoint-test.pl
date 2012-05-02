@@ -1,8 +1,8 @@
 use 5.010;
-use Web::Id::SAN::Email;
+use Web::ID::SAN::Email;
 use RDF::Trine;
 
-my $san = Web::Id::SAN::Email->new(
+my $san = Web::ID::SAN::Email->new(
 	type     => 'rfc822Address',
 	value    => 'somebody@fingerpoint.tobyinkster.co.uk',
 	);

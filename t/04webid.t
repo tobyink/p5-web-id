@@ -5,8 +5,8 @@ use lib 'lib';
 use lib 't/lib';
 
 use Test::More;
-use Web::Id;
-use Web::Id::Certificate::Generator;
+use Web::ID;
+use Web::ID::Certificate::Generator;
 
 -x '/usr/bin/openssl'
 	or plan skip_all => "/usr/bin/openssl not executable";
@@ -51,10 +51,10 @@ for my $p (@PEOPLE)
 {
 	my $discard;
 	my $rdf;
-	$Certificates{$p} = 'Web::Id::Certificate'->generate(
+	$Certificates{$p} = 'Web::ID::Certificate'->generate(
 		passphrase        => 'secret',
 		subject_alt_names => [
-			Web::Id::SAN::URI->new(value => $baseuri.$p),
+			Web::ID::SAN::URI->new(value => $baseuri.$p),
 		],
 		subject_cn        => ucfirst($p),
 		rdf_output        => \$rdf,
@@ -71,13 +71,13 @@ for my $p (@PEOPLE)
 
 for my $p (@PEOPLE)
 {
-	my $webid = Web::Id->new(certificate => $Certificates{$p});
+	my $webid = Web::ID->new(certificate => $Certificates{$p});
 	ok($webid->valid, $webid->uri);
 }
 
 unlink tmpfile('carol');  # bye, bye
 
-my $carol = Web::Id->new(certificate => $Certificates{carol});
+my $carol = Web::ID->new(certificate => $Certificates{carol});
 ok(!$carol->valid, 'bye, bye carol!');
 
 do {
@@ -88,7 +88,7 @@ do {
 	print $fh $data;
 };
 
-my $eve = Web::Id->new(certificate => $Certificates{eve});
+my $eve = Web::ID->new(certificate => $Certificates{eve});
 ok(!$eve->valid, 'eve is evil!');
 
 for (@PEOPLE)

@@ -1,11 +1,11 @@
-package Web::Id::Certificate;
+package Web::ID::Certificate;
 
 use 5.010;
 use utf8;
 
 BEGIN {
-	$Web::Id::Certificate::AUTHORITY = 'cpan:TOBYINK';
-	$Web::Id::Certificate::VERSION   = '0.001';
+	$Web::ID::Certificate::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::Certificate::VERSION   = '0.001';
 }
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!
@@ -13,13 +13,13 @@ use DateTime 0;
 use Any::Moose 'X::Types::Moose' => [':all'];
 use Digest::SHA1 qw(sha1_hex);
 use MIME::Base64 0 qw(decode_base64);
-use Web::Id::Types qw(:all);
-use Web::Id::SAN;
-use Web::Id::SAN::Email;
-use Web::Id::SAN::URI;
-use Web::Id::Util qw(:default part);
+use Web::ID::Types qw(:all);
+use Web::ID::SAN;
+use Web::ID::SAN::Email;
+use Web::ID::SAN::URI;
+use Web::ID::Util qw(:default part);
 
-# Partly sorts a list of Web::Id::SAN objects,
+# Partly sorts a list of Web::ID::SAN objects,
 # prioritising URIs and Email addresses.
 #
 # Note: placing this deliberately before namespace::clean.
@@ -28,8 +28,8 @@ sub _sort_san
 {
 	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
 	part {
-		if ($_->isa('Web::Id::SAN::URI'))       { 0 }
-		elsif ($_->isa('Web::Id::SAN::Email'))  { 1 }
+		if ($_->isa('Web::ID::SAN::URI'))       { 0 }
+		elsif ($_->isa('Web::ID::SAN::Email'))  { 1 }
 		else                                    { 2 }
 	}
 	@_;
@@ -110,7 +110,7 @@ sub _build__x509
 sub _build_public_key
 {
 	my ($self) = @_;
-	Web::Id::RSAKey->new($self->_x509->pubkey_components);
+	Web::ID::RSAKey->new($self->_x509->pubkey_components);
 }
 
 sub _build_subject_alt_names
@@ -143,10 +143,10 @@ my $default_san_factory = sub
 {
 	my (%args) = @_;
 	my $class = {
-			uniformResourceIdentifier  => 'Web::Id::SAN::URI',
-			rfc822Name                 => 'Web::Id::SAN::Email',
+			uniformResourceIdentifier  => 'Web::ID::SAN::URI',
+			rfc822Name                 => 'Web::ID::SAN::Email',
 		}->{ $args{type} }
-		// 'Web::Id::SAN';
+		// 'Web::ID::SAN';
 	$class->new(%args);
 };
 
@@ -171,11 +171,11 @@ __END__
 
 =head1 NAME
 
-Web::Id::Certificate - an x509 certificate
+Web::ID::Certificate - an x509 certificate
 
 =head1 SYNOPSIS
 
- my $cert = Web::Id::Certificate->new(pem => $pem_encoded_x509);
+ my $cert = Web::ID::Certificate->new(pem => $pem_encoded_x509);
  foreach (@{ $cert->subject_alt_names })
  {
    say "SAN: ", $_->type, " = ", $_->value;
@@ -206,14 +206,14 @@ Allow the others to be built automatically.
 
 =item C<< public_key >>
 
-A L<Web::Id::RSAKey> object.
+A L<Web::ID::RSAKey> object.
 
 =item C<< fingerprint >>
 
 A string identifier for the certificate. It is the lower-cased
 hexadecimal SHA1 hash of the DER-encoded certificate.
 
-This is not used in WebId authentication, but may be used as an
+This is not used in WebID authentication, but may be used as an
 identifier for the certificate if you need to keep it in a cache.
 
 =item C<< not_before >>
@@ -228,13 +228,13 @@ has ceased) to be valid.
 
 =item C<< subject_alt_names >>
 
-An arrayref containing a list of subject alt names (L<Web::Id::SAN>
+An arrayref containing a list of subject alt names (L<Web::ID::SAN>
 objects) associated with the certificate. These are sorted in the order
-they'll be tried for WebId authentication. 
+they'll be tried for WebID authentication. 
 
 =item C<< san_factory >>
 
-A coderef used for building L<Web::Id::SAN> objects. It's very unlikely
+A coderef used for building L<Web::ID::SAN> objects. It's very unlikely
 you need to play with this - the default is probably OK. But changing this
 is "supported" (in so much as any of this is supported).
 
@@ -272,14 +272,19 @@ Delegated to the C<public_key> attribute.
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=Web-Id>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::Id>, L<Crypt::X509>.
+L<Web::ID>,
+L<Web::ID::SAN>,
+L<Web::ID::RSAKey>.
 
-L<Web::Id::Certificate::Generator> - augments this class to add the
-ability to generate new WebId certificates.
+L<Web::ID::Certificate::Generator> - augments this class to add the
+ability to generate new WebID certificates.
+
+L<Crypt::X509> provides a pure Perl X.509 certificate parser, and is
+used internally by this module.
 
 =head1 AUTHOR
 
