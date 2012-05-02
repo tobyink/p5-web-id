@@ -215,6 +215,19 @@ share very little code, and have quite different APIs.
 
 Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
+=head1 THANKS
+
+Thanks to Kjetil Kjernsmo (cpan:KJETILK) for persuading me to port my old
+CGI-specific implementaton of this to Plack.
+
+Thanks to Henry Story, Melvin Carvalho, Bruno Harbulot, Ian Jacobi and
+many others for developing WebId from a poorly thought out idea to a 
+clever, yet simple and practical authentication protocol.
+
+Thanks to Gregory Williams (cpan:GWILLIAMS), Tatsuhiko Miyagawa
+(cpan:MIYAGAWA) and the Moose team for providing really good platforms
+(RDF::Trine, Plack and Any::Moose respectively) to build this on.
+
 =head1 COPYRIGHT AND LICENCE
 
 This software is copyright (c) 2012 by Toby Inkster.
