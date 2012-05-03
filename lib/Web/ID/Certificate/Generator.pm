@@ -70,7 +70,7 @@ sub generate
 	my $tempdir = Path::Class::Dir->new( File::Temp->newdir );
 	$tempdir->mkpath;
 	
-	open my $config, '>', $tempdir->file('openssl.cnf');
+	my $config = $tempdir->file('openssl.cnf')->openw;
 	say $config $_ for
 		q([req]),
 		q(default_bits = 1024),
