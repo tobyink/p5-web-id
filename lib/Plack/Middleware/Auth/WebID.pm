@@ -193,19 +193,12 @@ So for this authentication module to work...
 =item * You need to be using a server which supports HTTPS.
 
 Many web PSGI web servers (e.g. HTTP::Server::Simple, Starman, etc) do
-not support HTTPS. In some cases these are used with an HTTPS proxy in
-front of them.
+not support HTTPS natively. In some cases these are used with an HTTPS
+proxy in front of them.
 
 =item * Your HTTPS server needs to request a client certificate from the client.
 
-If you're using Apache (via CGI or mod_perl) then you want to look at the
-B<SSLVerifyClient> directive.
-
 =item * Your HTTPS server needs to expose the client certificate to Plack via C<< $env >>.
-
-If you're using Apache, then you want to set the B<SSLOptions>
-directive and enable the C<ExportCertData> option, or try
-L<Plack::Middleware::Apache2::ModSSL>.
 
 If you're using an HTTPS proxy in front of a non-HTTPS web server,
 then you might need to be creative to find a way to forward this
@@ -216,6 +209,28 @@ information to your backend web server.
 Nuff said.
 
 =back
+
+=head2 Apache2 (mod_perl and CGI)
+
+The B<SSLVerifyClient> directive can be used to tell Apache that you want it
+to request a certificate from the client.
+
+Apache is able to deposit the certifcate in an environment variable called
+SSL_CLIENT_CERT. However by default it might not. Check out the B<SSLOptions>
+directive and enable the C<ExportCertData> option, or if you're using mod_perl
+try L<Plack::Middleware::Apache2::ModSSL>.
+
+=head2 Gepok
+
+L<Gepok> is one of a very small number of PSGI-compatible web servers that
+supports HTTPS natively. As of 0.19 it does not request client certificates,
+however there is a fork which provides client certificate support at
+L<https://github.com/tobyink/p5-gepok>, which will hopefully be merged into
+the release versions of Gepok at some point in the near future.
+
+This still doesn't give you the certificate in C<< $env >> though. I'm
+working on some Plack middleware to do that. Keep an eye on
+L<https://metacpan.org/author/TOBYINK>.
 
 =head1 BUGS
 
