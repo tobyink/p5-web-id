@@ -1,5 +1,10 @@
 package Plack::Middleware::Auth::WebID;
 
+{
+	$Plack::Middleware::Auth::WebID::AUTHORITY = 'cpan:TOBYINK';
+	$Plack::Middleware::Auth::WebID::VERSION   = '1.910_01';
+}
+
 use strict;
 use base qw(Plack::Middleware);
 use Class::Load qw(load_class);

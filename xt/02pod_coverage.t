@@ -4,7 +4,7 @@ use Test::Pod::Coverage;
 my @modules =
 	map { s[^lib/][]; s[.pm$][]; s[/][::]g; $_ }
 	my @_x = qw(
-		lib/Plack/Middleware/Auth/WebId.pm
+		lib/Plack/Middleware/Auth/WebID.pm
 		lib/Web/ID/Certificate/Generator.pm
 		lib/Web/ID/Certificate.pm
 		lib/Web/ID/FAQ.pod
