@@ -229,8 +229,8 @@ L<https://github.com/tobyink/p5-gepok>, which will hopefully be merged into
 the release versions of Gepok at some point in the near future.
 
 This still doesn't give you the certificate in C<< $env >> though. I'm
-working on some Plack middleware to do that. Keep an eye on
-L<https://metacpan.org/author/TOBYINK>.
+working on some Plack middleware to do that. It will be released as
+L<Plack::Middleware::GepokX::ModSSL> in due course.
 
 =head1 BUGS
 

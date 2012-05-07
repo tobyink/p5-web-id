@@ -235,8 +235,8 @@ many others for developing WebID from a poorly thought out idea to a
 clever, yet simple and practical authentication protocol.
 
 Thanks to Gregory Williams (cpan:GWILLIAMS), Tatsuhiko Miyagawa
-(cpan:MIYAGAWA) and the Moose team for providing really good platforms
-(RDF::Trine, Plack and Any::Moose respectively) to build this on.
+(cpan:MIYAGAWA) and the Moose Cabal for providing really good platforms
+(RDF::Trine, Plack and Moose respectively) to build this on.
 
 =head1 COPYRIGHT AND LICENCE
 
