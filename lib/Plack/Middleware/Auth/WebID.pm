@@ -49,7 +49,7 @@ sub call
 	my $cert  = $env->{ $self->certificate_env_key }
 		or return $self->$unauth($env);
 	
-	my ($webid, $was_cached) = $self->_get_webid($cert);
+	my ($webid, $was_cached) = $self->_get_webid($cert, $env);
 	
 	if ($webid->valid)
 	{
@@ -57,10 +57,18 @@ sub call
 		$env->{WEBID_OBJECT}    = $webid unless $self->no_object_please;
 		$env->{WEBID_CACHE_HIT} = $was_cached;
 		
-		return $self->app->($env);
+		return $self->_run_app($env);
 	}
 	
 	return $self->$unauth($env);
+}
+
+sub _run_app
+{
+	my ($self, $env) = @_;
+	my $app = $self->app;
+	@_ = $env;
+	goto $app;
 }
 
 sub _get_webid
