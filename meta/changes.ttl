@@ -17,3 +17,16 @@ dist:v_1-910_01
 		dcs:versus <http://purl.org/NET/cpan-uri/dist/CGI-Auth-FOAF_SSL/v_1-002> ;
 		dcs:item   [ rdfs:label "Almost complete rewrite of CGI::Auth::FOAF_SSL. Very different (and much cleaner) API."@en ]
 	].
+
+dist:project :release dist:v_1-910_02 .
+dist:v_1-910_02
+	a               :Version ;
+	dc:issued       "2012-05-08"^^xsd:date ;
+	:revision       "1.910_02"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.910_02.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-910_01 ;
+		dcs:item   [ rdfs:label "Improve Web::ID DESCRIPTION."@en ; a dcs:Documentation ];
+		dcs:item   [ rdfs:label "Add Any::Moose stuff to Web::ID BUGS section."@en ; a dcs:Documentation ];
+		dcs:item   [ rdfs:label "Replace deprecated Digest::SHA1 with Digest::SHA."@en ; a dcs:Update ]
+	].
