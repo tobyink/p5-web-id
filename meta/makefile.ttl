@@ -11,7 +11,7 @@
 		"Class::Load",
 		"Crypt::X509",
 		"DateTime",
-		"Digest::SHA1",
+		"Digest::SHA",
 		"List::MoreUtils",
 		"MIME::Base64",
 		"Mouse",
