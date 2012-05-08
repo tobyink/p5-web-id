@@ -127,7 +127,7 @@ Web::ID - implementation of WebID (a.k.a. FOAF+SSL)
 WebID is a simple authentication protocol based on TLS (Transaction
 Layer Security, better known as Secure Socket Layer, SSL) and the
 Semantic Web. This module provides a Perl implementation for
-authenticating clients using Web::ID.
+authenticating clients using WebID.
 
 For more information see the L<Web::ID::FAQ> document.
 
