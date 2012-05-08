@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::RSAKey::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::RSAKey::VERSION   = '1.910_01';
+	$Web::ID::RSAKey::VERSION   = '1.910_02';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];
