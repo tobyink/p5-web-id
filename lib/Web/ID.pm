@@ -124,6 +124,19 @@ Web::ID - implementation of WebID (a.k.a. FOAF+SSL)
 
 =head1 DESCRIPTION
 
+WebID is a simple authentication protocol based on TLS (Transaction
+Layer Security, better known as Secure Socket Layer, SSL) and the
+Semantic Web. This module provides a Perl implementation for
+authenticating clients using Web::ID.
+
+For more information see the L<Web::ID::FAQ> document.
+
+Bundled with this module are L<Plack::Middleware::Auth::WebID>, a
+plugin for L<Plack> to perform WebID authentication on HTTPS
+connections; and L<Web::ID::Certificate::Generator>, a module that
+allows you to generate WebID-enabled certificates that can be
+installed into web browsers.
+
 =head2 Constructor
 
 =over
