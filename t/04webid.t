@@ -4,6 +4,8 @@ use strict;
 use lib 'lib';
 use lib 't/lib';
 
+use File::Temp qw();
+use Path::Class qw();
 use Test::More;
 use Web::ID;
 use Web::ID::Certificate::Generator;
@@ -14,12 +16,13 @@ use Web::ID::Certificate::Generator;
 our @PEOPLE = qw(alice bob carol david eve);
 our %Certificates;
 
+my $tmpdir = Path::Class::Dir->new( File::Temp->newdir );
+$tmpdir->mkpath;
+
 sub tmpfile
 {
-	my $file     = (shift // '');
-	(my $tmpfile = __FILE__)
-		=~ s{ 04webid.t }{ 'tmp/'.$file }ex;
-	return $tmpfile;
+	return $tmpdir->file(@_) if @_;
+	return $tmpdir;
 }
 
 {
@@ -28,11 +31,19 @@ sub tmpfile
 	for my $p (@::PEOPLE)
 	{
 		*$p = sub {
-			shift->{out_headers}{content_type} =
-				$p eq 'david' ? 'text/turtle' : 'application/rdf+xml';
-			local $/ = undef;
-			open my $fh, '<', main::tmpfile($p);
-			<$fh>;
+			if (-e main::tmpfile($p))
+			{
+				shift->{out_headers}{content_type} =
+					$p eq 'david' ? 'text/turtle' : 'application/rdf+xml';
+				~~main::tmpfile($p)->slurp;
+			}
+			else
+			{
+				my $server = shift;
+				$server->{out_code} = '404 Not Found';
+				$server->{out_headers}{content_type} = 'text/plain';
+				'Not Found';
+			}
 		}
 	}
 }
@@ -44,8 +55,6 @@ plan tests => 12;
 		  
 my $server  = Test::HTTP::Server->new();
 my $baseuri = $server->uri;
-
-mkdir tmpfile();
 
 for my $p (@PEOPLE)
 {
@@ -63,10 +72,9 @@ for my $p (@PEOPLE)
 	
 	isa_ok($rdf, 'RDF::Trine::Model', tmpfile($p).' $rdf');
 	
-	open my $fh, '>', tmpfile($p);
 	RDF::Trine::Serializer
 		-> new($p eq 'david' ? 'Turtle' : 'RDFXML')
-		-> serialize_model_to_file($fh, $rdf);
+		-> serialize_model_to_file(tmpfile($p)->openw, $rdf);
 }
 
 for my $p (@PEOPLE)
@@ -75,25 +83,19 @@ for my $p (@PEOPLE)
 	ok($webid->valid, $webid->uri);
 }
 
-unlink tmpfile('carol');  # bye, bye
+tmpfile('carol')->remove;  # bye, bye
 
 my $carol = Web::ID->new(certificate => $Certificates{carol});
 ok(!$carol->valid, 'bye, bye carol!');
 
 do {
-	my $data = do { local(@ARGV, $/) = tmpfile('eve'); <> };
-	$data =~ s/exponent/component/g;
-	
-	open my $fh, '>', tmpfile('eve');
+	(my $data = tmpfile('eve')->slurp)
+		=~ s/exponent/component/g;
+	my $fh = tmpfile('eve')->openw;
 	print $fh $data;
 };
 
 my $eve = Web::ID->new(certificate => $Certificates{eve});
 ok(!$eve->valid, 'eve is evil!');
 
-for (@PEOPLE)
-{
-	1 while unlink tmpfile($_);
-}
-
-rmdir tmpfile();
+tmpfile()->rmtree;

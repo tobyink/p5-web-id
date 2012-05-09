@@ -50,5 +50,6 @@ dist:v_1-910_04
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.910_04.tar.gz> ;
 	dcs:changeset [
 		dcs:versus dist:v_1-910_03 ;
-		dcs:item   [ rdfs:label "Drop dependency on Class::Load; use load_class from Plack::Util instead."@en ]
+		dcs:item   [ rdfs:label "Drop dependency on Class::Load; use load_class from Plack::Util instead."@en ] ;
+		dcs:item   [ rdfs:label "Use File::Temp and Path::Class in t/04webid.t - they're already dependencies, so might as well."@en ]
 	].
