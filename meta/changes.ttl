@@ -30,3 +30,14 @@ dist:v_1-910_02
 		dcs:item   [ rdfs:label "Add Any::Moose stuff to Web::ID BUGS section."@en ; a dcs:Documentation ];
 		dcs:item   [ rdfs:label "Replace deprecated Digest::SHA1 with Digest::SHA."@en ; a dcs:Update ]
 	].
+
+dist:project :release dist:v_1-910_03 .
+dist:v_1-910_03
+	a               :Version ;
+	dc:issued       "2012-05-09"^^xsd:date ;
+	:revision       "1.910_03"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.910_03.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-910_02 ;
+		dcs:item   [ rdfs:label "Better hooks for subclassing Plack::Middleware::Auth::WebID."@en ]
+	].
