@@ -41,3 +41,14 @@ dist:v_1-910_03
 		dcs:versus dist:v_1-910_02 ;
 		dcs:item   [ rdfs:label "Better hooks for subclassing Plack::Middleware::Auth::WebID."@en ]
 	].
+
+dist:project :release dist:v_1-910_04 .
+dist:v_1-910_04
+	a               :Version ;
+	dc:issued       "2012-05-09"^^xsd:date ;
+	:revision       "1.910_04"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.910_04.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-910_03 ;
+		dcs:item   [ rdfs:label "Drop dependency on Class::Load; use load_class from Plack::Util instead."@en ]
+	].

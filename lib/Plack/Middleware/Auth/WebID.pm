@@ -7,8 +7,7 @@ package Plack::Middleware::Auth::WebID;
 
 use strict;
 use base qw(Plack::Middleware);
-use Class::Load qw(load_class);
-use Plack::Util;
+use Plack::Util;;
 use Plack::Util::Accessor qw(
 	webid_class
 	certificate_env_key
@@ -38,7 +37,7 @@ sub prepare_app
 	$self->on_unauth($default_unauth)
 		unless defined $self->on_unauth;
 	
-	load_class('Web::ID');
+	Plack::Util::load_class('Web::ID');
 }
 
 sub call

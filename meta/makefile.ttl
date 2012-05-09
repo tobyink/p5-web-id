@@ -8,7 +8,6 @@
 	:readme_from _:main ;
 	:requires
 		"Any::Moose",
-		"Class::Load",
 		"Crypt::X509",
 		"DateTime",
 		"Digest::SHA",
