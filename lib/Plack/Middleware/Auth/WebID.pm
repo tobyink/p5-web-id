@@ -2,7 +2,7 @@ package Plack::Middleware::Auth::WebID;
 
 {
 	$Plack::Middleware::Auth::WebID::AUTHORITY = 'cpan:TOBYINK';
-	$Plack::Middleware::Auth::WebID::VERSION   = '1.910_04';
+	$Plack::Middleware::Auth::WebID::VERSION   = '1.920';
 }
 
 use strict;
