@@ -6,6 +6,8 @@
 @prefix dist:    <http://purl.org/NET/cpan-uri/dist/Web-ID/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix cpanid:  <http://purl.org/NET/cpan-uri/person/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
 
 dist:project :release dist:v_1-910_01 .
 dist:v_1-910_01
@@ -26,10 +28,19 @@ dist:v_1-910_02
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.910_02.tar.gz> ;
 	dcs:changeset [
 		dcs:versus dist:v_1-910_01 ;
-		dcs:item   [ rdfs:label "Improve Web::ID DESCRIPTION."@en ; a dcs:Documentation ];
-		dcs:item   [ rdfs:label "Add Any::Moose stuff to Web::ID BUGS section."@en ; a dcs:Documentation ];
-		dcs:item   [ rdfs:label "Replace deprecated Digest::SHA1 with Digest::SHA."@en ; a dcs:Update ]
+		dcs:item   [ rdfs:label "Improve Web::ID DESCRIPTION."@en ; a dcs:Documentation ; dcs:thanks <urn:uuid:b4739b42-3580-4ec1-bb09-7a23544e09f1> ];
+		dcs:item   [ rdfs:label "Add Any::Moose stuff to Web::ID BUGS section."@en ; a dcs:Documentation ; dcs:thanks cpanid:flora ];
+		dcs:item   [ rdfs:label "Replace deprecated Digest::SHA1 with Digest::SHA."@en ; a dcs:Update ; dcs:thanks <urn:uuid:b4739b42-3580-4ec1-bb09-7a23544e09f1> ]
 	].
+
+<urn:uuid:b4739b42-3580-4ec1-bb09-7a23544e09f1>
+	a               foaf:Person ;
+	foaf:name       "Jonas Smedegaard" .
+
+cpanid:flora
+	a               foaf:Person ;
+	foaf:name       "Florian Ragwitz" ;
+	foaf:mbox       <mailto:flora@cpan.org> .
 
 dist:project :release dist:v_1-910_03 .
 dist:v_1-910_03
@@ -51,5 +62,22 @@ dist:v_1-910_04
 	dcs:changeset [
 		dcs:versus dist:v_1-910_03 ;
 		dcs:item   [ rdfs:label "Drop dependency on Class::Load; use load_class from Plack::Util instead."@en ] ;
-		dcs:item   [ rdfs:label "Use File::Temp and Path::Class in t/04webid.t - they're already dependencies, so might as well."@en ]
+		dcs:item   [ rdfs:label "Use File::Temp and Path::Class in t/04webid.t - they're already dependencies, so might as well."@en; dcs:thanks cpanid:kjetilk ]
+	].
+
+cpanid:kjetilk
+	a               foaf:Person ;
+	foaf:name       "Kjetil Kjernsmo" ;
+	foaf:mbox       <mailto:kjetilk@cpan.org> .
+	
+dist:project :release dist:v_1-920 .
+dist:v_1-920
+	a               :Version ;
+	dc:issued       "2012-05-10"^^xsd:date ;
+	:revision       "1.920"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.920.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-910_04 ;
+		dcs:item   [ rdfs:label "Minor documentation changes."@en; a dcs:Documentation ] ;
+		dcs:item   [ rdfs:label "Mark as non-development release."@en; a dcs:Packaging ]
 	].

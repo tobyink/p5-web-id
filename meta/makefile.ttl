@@ -6,6 +6,9 @@
 	:perl_version_from _:main ;
 	:version_from _:main ;
 	:readme_from _:main ;
+	:recommends
+		"Moose",
+		"MooseX::Types";
 	:requires
 		"Any::Moose",
 		"Crypt::X509",
@@ -26,5 +29,3 @@
 		"Test::More 0.61"  .
 
 _:main <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName> "lib/Web/ID.pm" .
-
-# grep -hr '^use ' lib/ | cut -d ' ' -f 2 | sed 's/;//' | sort -u | sed 's/^/"/;s/$/",/'
