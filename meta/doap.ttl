@@ -18,7 +18,7 @@
 	:created        "2012-04-26"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
 	rdfs:seeAlso    <http://purl.org/NET/cpan-uri/dist/CGI-Auth-FOAF_SSL/project> ;
-	:developer      .
+	:developer      <http://purl.org/NET/cpan-uri/person/tobyink> .
 
 <http://dev.perl.org/licenses/>
 	dc:title        "the same terms as the perl 5 programming language system itself" .
