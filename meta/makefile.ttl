@@ -17,7 +17,7 @@
 		"List::MoreUtils",
 		"MIME::Base64",
 		"Mouse",
-		"MouseX::Types",
+		"MouseX::Types 0.06",
 		"namespace::clean",
 		"Path::Class",
 		"Plack",

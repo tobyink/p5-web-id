@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::VERSION   = '1.920';
+	$Web::ID::VERSION   = '1.921';
 }
 
 use Any::Moose 'X::Types::Moose' => [':all'];

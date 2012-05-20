@@ -4,6 +4,11 @@ use 5.010;
 use strict;
 use utf8;
 
+BEGIN {
+	$Web::ID::Types::AUTHORITY = 'cpan:TOBYINK';
+	$Web::ID::Types::VERSION   = '1.921';
+}
+
 use DateTime;
 use Math::BigInt;
 use RDF::Trine;
