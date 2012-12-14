@@ -235,14 +235,9 @@ try L<Plack::Middleware::Apache2::ModSSL>.
 =head2 Gepok
 
 L<Gepok> is one of a very small number of PSGI-compatible web servers that
-supports HTTPS natively. As of 0.19 it does not request client certificates,
-however there is a fork which provides client certificate support at
-L<https://github.com/tobyink/p5-gepok>, which will hopefully be merged into
-the release versions of Gepok at some point in the near future.
-
-This still doesn't give you the certificate in C<< $env >> though. I'm
-working on some Plack middleware to do that. It will be released as
-L<Plack::Middleware::GepokX::ModSSL> in due course.
+supports HTTPS natively. As of 0.20 it will request client certificates, but
+you will need to use L<Plack::Middleware::GepokX::ModSSL> in order to make
+the certificate available in the PSGI C<< $env >> hashref.
 
 =head1 BUGS
 
@@ -263,6 +258,10 @@ Apache mod_ssl:
 L<Plack::Middleware::Apache2::ModSSL>,
 L<Apache2::ModSSL>,
 L<http://httpd.apache.org/docs/2.0/mod/mod_ssl.html>.
+
+Gepok:
+L<Gepok>,
+L<Plack::Middleware::GepokX::ModSSL>.
 
 =head1 AUTHOR
 
