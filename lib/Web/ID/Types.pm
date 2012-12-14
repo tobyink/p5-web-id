@@ -57,8 +57,7 @@ Web::ID::Types - type library for Web::ID and friends
 
 =head1 DESCRIPTION
 
-This module uses L<Any::Moose> and is capable of providing either a
-L<MooseX::Types> type library, or a L<MouseX::Types> type library.
+A L<MooseX::Types> type library defining:
 
 =head2 Types
 

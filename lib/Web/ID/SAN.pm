@@ -88,7 +88,7 @@ Web::ID::SAN - represents a single name from a certificate's subjectAltName fiel
 
 =item C<< new >>
 
-Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+Standard Moose-style constructor. 
 
 =back
 

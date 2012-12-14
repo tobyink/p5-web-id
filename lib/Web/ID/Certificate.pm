@@ -22,8 +22,6 @@ use Web::ID::Util qw(:default part);
 # Partly sorts a list of Web::ID::SAN objects,
 # prioritising URIs and Email addresses.
 #
-# Note: placing this deliberately before namespace::clean.
-#
 sub _sort_san
 {
 	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
@@ -35,8 +33,8 @@ sub _sort_san
 	@_;
 }
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep -also => '_sort_san';
 
 has pem => (
 	is          => read_only,
@@ -188,7 +186,7 @@ Web::ID::Certificate - an x509 certificate
 
 =item C<< new >>
 
-Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+Standard Moose-style constructor. 
 
 =back
 

@@ -143,7 +143,7 @@ installed into web browsers.
 
 =item C<< new >>
 
-Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+Standard Moose-style constructor. 
 
 =back
 
@@ -208,60 +208,9 @@ can do stuff like:
 
 =back
 
-=head1 BUGS AND LIMITATIONS
+=head1 BUGS
 
-=head2 Any::Moose
-
-This module uses L<Any::Moose> which means that if it detects that
-you're using the rather heavyweight L<Moose> toolkit, then this module
-will use it too. But if you're not using it, then this module will
-use the lighter-weight L<Mouse> toolkit.
-
-Similarly, this module will use either L<MouseX::Types> or
-L<MooseX::Types>.
-
-As the decision to use Moose or Mouse is made at runtime, this makes
-expressing Web::ID's dependencies rather challenging. Web::ID requires
-B<either>:
-
-=over
-
-=item * Any::Moose,
-
-=item * Mouse, and
-
-=item * MouseX::Types
-
-=back
-
-B<or>:
-
-=over
-
-=item * Any::Moose,
-
-=item * Moose, and
-
-=item * MooseX::Types
-
-=back
-
-The installation script for Web-ID checks the first set of
-dependencies, but if you only ever plan on using Moose, and never
-Mouse, then you don't need them - you need the second set.
-
-Yes, it's possible to have the installation script figure out
-a list of dependencies dynamically when you install Web-ID, but
-that's not especially helpful, as Any::Moose makes its decision
-about what module to use at run time, not at install time.
-
-The long and the short of it is: if you use Web::ID as part
-of a Moose application, then make sure you have MooseX::Types
-installed.
-
-=head2 Other
-
-Please report any other bugs to
+Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO

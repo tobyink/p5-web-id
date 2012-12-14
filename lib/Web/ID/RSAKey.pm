@@ -54,7 +54,7 @@ Web::ID::RSAKey - an RSA key
 
 =item C<< new >>
 
-Standard Moose-style constructor. (This class uses L<Any::Moose>.)
+Standard Moose-style constructor. 
 
 =back
 
