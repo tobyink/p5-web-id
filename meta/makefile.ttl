@@ -6,23 +6,18 @@
 	:perl_version_from _:main ;
 	:version_from _:main ;
 	:readme_from _:main ;
-	:recommends
-		"Moose",
-		"MooseX::Types";
 	:requires
-		"Any::Moose",
 		"Crypt::X509",
 		"DateTime",
 		"Digest::SHA",
 		"List::MoreUtils",
-		"MIME::Base64",
-		"Mouse",
-		"MouseX::Types 0.06",
-		"namespace::clean",
+		"Moose",
+		"MooseX::Types",
+		"namespace::sweep",
 		"Path::Class",
 		"Plack",
-		"RDF::Query",
-		"RDF::Trine",
+		"RDF::Query 2.900",
+		"RDF::Trine 1.000",
 		"Sub::Exporter",
 		"URI";
 	:test_requires

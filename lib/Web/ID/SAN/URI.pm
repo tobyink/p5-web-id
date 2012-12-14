@@ -8,12 +8,12 @@ BEGIN {
 	$Web::ID::SAN::URI::VERSION   = '1.921';
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::ID::Types ':all';
+use MooseX::Types::Moose -all;
+use Web::ID::Types -all;
 use Web::ID::Util;
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep;
 extends 'Web::ID::SAN';
 
 has '+type' => (default => 'uniformResourceIdentifier');
@@ -48,12 +48,12 @@ around associated_keys => sub
 			$result->{modulus},
 			fallback      => $result->{hexModulus},
 			fallback_type =>'hex',
-			);
+		);
 		my $exponent = make_bigint_from_node(
 			$result->{exponent},
 			fallback      => $result->{decExponent},
 			fallback_type =>'dec',
-			);
+		);
 		
 		my $key = $self->key_factory->(
 			modulus  => $modulus,
@@ -68,7 +68,7 @@ around associated_keys => sub
 sub _query
 {
 	my ($self) = @_;
-	return RDF::Query->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );
+	return "RDF::Query"->new( sprintf(<<'SPARQL', (($self->uri_object)x4)) );
 PREFIX cert: <http://www.w3.org/ns/auth/cert#>
 PREFIX rsa: <http://www.w3.org/ns/auth/rsa#>
 SELECT

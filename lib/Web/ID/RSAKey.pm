@@ -8,12 +8,12 @@ BEGIN {
 	$Web::ID::RSAKey::VERSION   = '1.921';
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::ID::Types ':all';
+use MooseX::Types::Moose -all;
+use Web::ID::Types -all;
 use Web::ID::Util;
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep;
 
 for (qw( exponent modulus ))
 {
@@ -22,7 +22,7 @@ for (qw( exponent modulus ))
 		isa         => Bigint,
 		required    => true,
 		coerce      => true,
-		);
+	);
 }
 
 sub rsa_equal

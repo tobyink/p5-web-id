@@ -8,9 +8,8 @@ BEGIN {
 	$Web::ID::Certificate::Generator::VERSION   = '1.921';
 }
 
-use Any::Moose
-	'X::Types::Moose' => [':all'],
-	'Util' => ['apply_all_roles'];
+use MooseX::Types::Moose -all;
+use Moose::Util qw(apply_all_roles);
 use File::Temp qw();
 use Path::Class qw();
 use RDF::Trine qw(statement blank iri literal);
@@ -18,8 +17,8 @@ use Web::ID::Certificate;
 use Web::ID::Types ':all';
 use Web::ID::Util;
 
-use Any::Moose 'Role';
-use namespace::clean -except => 'meta';
+use Moose::Role;
+use namespace::sweep;
 
 sub import
 {
@@ -57,7 +56,7 @@ sub generate
 		L    => delete $options{subject_locality},
 		O    => delete $options{subject_org},
 		CN   => delete $options{subject_cn},
-		);
+	);
 	
 	confess "need to provide subject_cn option" unless $subject{CN};
 	
@@ -115,7 +114,7 @@ sub generate
 		"-out"     => $tempdir->file('cert.pem'),
 		"-keyout"  => $tempdir->file('privkey.pem'),
 		"-passout" => "pass:".$passphrase,
-		);
+	);
 	
 	system(
 		$openssl,
@@ -127,7 +126,7 @@ sub generate
 		"-name"    => sprintf('%s <%s>', ($subject{CN}//'Unnamed'), $sans->[0]->value), 
 		"-passin"  => "pass:".$passphrase,
 		"-passout" => "pass:".$passphrase,
-		);
+	);
 	
 	if (ref $dest eq 'SCALAR')
 	{

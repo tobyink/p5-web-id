@@ -8,36 +8,35 @@ BEGIN {
 	$Web::ID::SAN::VERSION   = '1.921';
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::ID::Types ':all';
+use MooseX::Types::Moose -all;
+use Web::ID::Types -all;
 use RDF::Query 2.900;
 use URI 0;
 use URI::Escape 0 qw/uri_escape/;
 use Web::ID::RSAKey;
 use Web::ID::Util;
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep;
 
 has $_ => (
 	is          => read_only,
 	isa         => Str,
 	required    => true,
 	coerce      => false,
-	)
-	for qw(type value);
+) for qw(type value);
 
 has model => (
 	is          => read_only,
 	isa         => Model,
 	lazy_build  => true,
-	);
+);
 
 has key_factory => (
 	is          => read_only,
 	isa         => CodeRef,
 	lazy_build  => true,
-	);
+);
 
 sub _build_model
 {

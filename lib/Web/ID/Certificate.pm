@@ -10,10 +10,10 @@ BEGIN {
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!
 use DateTime 0;
-use Any::Moose 'X::Types::Moose' => [':all'];
+use MooseX::Types::Moose -all;
 use Digest::SHA qw(sha1_hex);
 use MIME::Base64 0 qw(decode_base64);
-use Web::ID::Types qw(:all);
+use Web::ID::Types -all;
 use Web::ID::SAN;
 use Web::ID::SAN::Email;
 use Web::ID::SAN::URI;
@@ -43,53 +43,52 @@ has pem => (
 	isa         => Str,
 	required    => true,
 	coerce      => false,
-	);
+);
 
 has _der => (
 	is          => read_only,
 	isa         => Str,
 	required    => true,
 	lazy_build  => true,
-	);
+);
 
 has _x509 => (
 	is          => read_only,
 	isa         => 'Crypt::X509',
 	lazy_build  => true,
-	);
+);
 
 has public_key => (
 	is          => read_only,
 	isa         => Rsakey,
 	lazy_build  => true,
 	handles     => [qw(modulus exponent)],
-	);
+);
 
 has subject_alt_names => (
 	is          => read_only,
 	isa         => ArrayRef,
 	lazy_build  => true,
-	);
+);
 
 has $_ => (
 	is          => read_only,
 	isa         => Datetime,
 	lazy_build  => true,
 	coerce      => true,
-	)
-	for qw( not_before not_after );
+) for qw( not_before not_after );
 
 has san_factory => (
 	is          => read_only,
 	isa         => CodeRef,
 	lazy_build  => true,
-	);
+);
 
 has fingerprint => (
 	is          => read_only,
 	isa         => Str,
 	lazy_build  => true,
-	);
+);
 
 sub _build_fingerprint
 {

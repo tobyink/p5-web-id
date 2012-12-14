@@ -8,45 +8,45 @@ BEGIN {
 	$Web::ID::VERSION   = '1.921';
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::ID::Types ':all';
+use MooseX::Types::Moose -all;
+use Web::ID::Types -all;
 use Web::ID::Certificate;
 use Web::ID::Util qw(:default uniq);
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep;
 
 has certificate => (
 	is          => read_only,
 	isa         => Certificate,
 	required    => true,
 	coerce      => true,
-	);
+);
 
 has uri => (
 	is          => read_only,
 	isa         => Uri,
 	lazy_build  => true,
 	coerce      => true,
-	);
+);
 
 has profile => (
 	is          => read_only,
 	isa         => Model,
 	lazy_build  => true,
-	);
+);
 
 has valid => (
 	is          => read_only,
 	isa         => Bool,
 	lazy_build  => true,
-	);
+);
 
 has first_valid_san => (
 	is          => read_only,
 	isa         => San | Undef,
 	lazy_build  => true,
-	);
+);
 
 sub _build_valid
 {

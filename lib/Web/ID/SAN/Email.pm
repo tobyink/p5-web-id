@@ -17,12 +17,12 @@ BEGIN {
 	}
 }
 
-use Any::Moose 'X::Types::Moose' => [':all'];
-use Web::ID::Types ':all';
+use MooseX::Types::Moose -all;
+use Web::ID::Types -all;
 use Web::ID::Util;
 
-use Any::Moose;
-use namespace::clean -except => 'meta';
+use Moose;
+use namespace::sweep;
 extends 'Web::ID::SAN';
 
 has '+type' => (default => 'rfc822Name');
@@ -32,7 +32,7 @@ has finger => (
 	isa         => Finger | Undef,
 	lazy        => true,
 	builder     => '_build_finger',
-	);
+);
 
 sub _build_finger
 {
@@ -69,17 +69,17 @@ around associated_keys => sub
 			$result->{modulus},
 			fallback      => $result->{hexModulus},
 			fallback_type =>'hex',
-			);
+		);
 		my $exponent = make_bigint_from_node(
 			$result->{exponent},
 			fallback      => $result->{decExponent},
 			fallback_type =>'dec',
-			);
+		);
 				
 		my $key = $self->key_factory->(
 			modulus  => $modulus,
 			exponent => $exponent,
-			);
+		);
 		push @keys, $key if $key;
 	}
 	
@@ -90,7 +90,7 @@ sub _query
 {
 	my ($self) = @_;
 	my $email = 'mailto:' . $self->value;
-	return RDF::Query->new( sprintf(<<'SPARQL', (($email)x4)) );
+	return "RDF::Query"->new( sprintf(<<'SPARQL', (($email)x4)) );
 PREFIX cert: <http://www.w3.org/ns/auth/cert#>
 PREFIX rsa: <http://www.w3.org/ns/auth/rsa#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
