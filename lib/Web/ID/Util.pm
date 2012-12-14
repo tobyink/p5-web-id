@@ -6,7 +6,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Util::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Util::VERSION   = '1.921';
+	$Web::ID::Util::VERSION   = '1.922';
 }
 
 use Carp qw/confess/;

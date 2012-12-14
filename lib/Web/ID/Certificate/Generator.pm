@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Certificate::Generator::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Certificate::Generator::VERSION   = '1.921';
+	$Web::ID::Certificate::Generator::VERSION   = '1.922';
 }
 
 use MooseX::Types::Moose -all;

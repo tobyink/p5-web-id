@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::SAN::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::SAN::VERSION   = '1.921';
+	$Web::ID::SAN::VERSION   = '1.922';
 }
 
 use MooseX::Types::Moose -all;
