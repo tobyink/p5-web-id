@@ -92,3 +92,17 @@ dist:v_1-921
 		dcs:versus dist:v_1-920 ;
 		dcs:item   [ rdfs:label "Add version number (0.06) to MouseX::Types dependency."@en; a dcs:Packaging ]
 	].
+
+dist:project :release dist:v_1-922 .
+dist:v_1-922
+	a               :Version ;
+	dc:issued       "2012-12-15"^^xsd:date ;
+	:revision       "1.922"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.922.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-921 ;
+		dcs:item   [ rdfs:label "RDF::Trine now uses Moose, so there's no reason for Web::ID to continue using Any::Moose. All the old Any::Moose/Mouse stuff is now gone, and Web::ID now uses Moose and MooseX::Types."@en; a dcs:Update ];
+		dcs:item   [ rdfs:label "Switched from namespace::clean to namespace::sweep."@en; a dcs:Update ];
+		dcs:item   [ rdfs:label "Documented test suite."@en; a dcs:Documentation ];
+		dcs:item   [ rdfs:label "Make test suite output cleaner (no openssl junk) if Capture::Tiny is available."@en; a dcs:Change ];
+	].
