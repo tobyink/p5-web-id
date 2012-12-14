@@ -1,3 +1,34 @@
+=head1 PURPOSE
+
+Performs as close to an end-to-end test as possible without an actual
+HTTPS server.
+
+Generates certificates for five dummy identities using
+L<Web::ID::Certificate::Generator>; creates FOAF profiles for them
+(using a mixture of Turtle and RDF/XML) and checks that their
+certificates can be validated against their profiles.
+
+Destroys one of the FOAF profiles and checks that the corresponding
+certificate no longer validates.
+
+Alters one of the FOAF profiles and checks that the corresponding
+certificate no longer validates.
+
+Tries its very best to clean up after itself.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
 use 5.010;
 use strict;
 
@@ -10,8 +41,20 @@ use Test::More;
 use Web::ID;
 use Web::ID::Certificate::Generator;
 
+# Attempt to silence openssl during test cases
+sub capture_merged (&;@);
+BEGIN {
+	*capture_merged = eval { require Capture::Tiny }
+		? \&Capture::Tiny::capture_merged
+		: sub (&;@) { my $code = shift; $code->() }
+}
+
 -x '/usr/bin/openssl'
 	or plan skip_all => "/usr/bin/openssl not executable";
+
+# They're unlikely to have /usr/bin/openssl anyway, but...
+$^O eq 'MSWin32'
+	and plan skip_all => "This test will not run on MSWin32";
 
 our @PEOPLE = qw(alice bob carol david eve);
 our %Certificates;
@@ -60,15 +103,17 @@ for my $p (@PEOPLE)
 {
 	my $discard;
 	my $rdf;
-	$Certificates{$p} = 'Web::ID::Certificate'->generate(
-		passphrase        => 'secret',
-		subject_alt_names => [
-			Web::ID::SAN::URI->new(value => $baseuri.$p),
-		],
-		subject_cn        => ucfirst($p),
-		rdf_output        => \$rdf,
-		cert_output       => \$discard,
-	)->pem;
+	my @captured = capture_merged {
+		$Certificates{$p} = 'Web::ID::Certificate'->generate(
+			passphrase        => 'secret',
+			subject_alt_names => [
+				Web::ID::SAN::URI->new(value => $baseuri.$p),
+			],
+			subject_cn        => ucfirst($p),
+			rdf_output        => \$rdf,
+			cert_output       => \$discard,
+		)->pem
+	};
 	
 	isa_ok($rdf, 'RDF::Trine::Model', tmpfile($p).' $rdf');
 	

@@ -1,3 +1,27 @@
+=head1 PURPOSE
+
+Tests that L<Web::ID::Certificate> is able to extract information from a
+PEM-encoded certificate.
+
+The majority of the tests are conducted on a certificate that I<< will
+expire on 2013-06-21T11:49:45 >> however, it is believed that the nature
+of these tests is such that they will continue to pass after the certificate
+has expired. (No tests should be relying on it being a timely certificate.)
+The situation may need reviewing in July 2013.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
 use Test::More tests => 18;
 use Web::ID::Certificate;
 
@@ -31,49 +55,49 @@ is(
 	$cert->not_before,
 	'2009-06-22T11:49:45',
 	'certificate not_before correct',
-	);
+);
 
 is(
 	$cert->not_after,
 	'2013-06-21T11:49:45',
 	'certificate not_after correct',
-	);
+);
 
 ok(
 	! $cert->timely( $cert->not_before->clone->subtract(days => 1) ),
 	'not timely before not_before',
-	);
+);
 
 ok(
 	$cert->timely( $cert->not_before ),
 	'timely on not_before',
-	);
+);
 
 ok(
 	$cert->timely( $cert->not_before->clone->add(days => 1) ),
 	'timely after not_before',
-	);
+);
 
 ok(
 	$cert->timely( $cert->not_after ),
 	'timely on not_after',
-	);
+);
 
 ok(
 	! $cert->timely( $cert->not_after->clone->add(days => 1) ),
 	'not timely after not_after',
-	);
+);
 
 is(
 	$cert->fingerprint,
 	'f4651a0cd4efc7301103a7dfec983244dd47b190',
 	'correct fingerprint',
-	);
+);
 
 ok(
 	$cert->exponent eq '65537',
 	'correct exponent'
-	);
+);
 
 (my $modulus = <<MOD)  =~ s/\D//g;
 146454716751099837259538589121569684032917070750180889825346452
@@ -86,29 +110,29 @@ MOD
 ok(
 	$cert->modulus eq $modulus,
 	'correct modulus'
-	);
+);
 
 isa_ok(
 	$cert->subject_alt_names->[$_],
 	'Web::ID::SAN',
 	"SAN $_",
-	) for 0..2;
+) for 0..2;
 
 isa_ok(
 	$cert->subject_alt_names->[0],
 	'Web::ID::SAN::URI',
 	"SAN 0",
-	);
+);
 
 isa_ok(
 	$cert->subject_alt_names->[$_],
 	'Web::ID::SAN::Email',
 	"SAN $_",
-	) for 1..2;
+) for 1..2;
 
 is(
 	$cert->subject_alt_names->[0]->value,
 	'http://tobyinkster.co.uk/#i',
 	'SAN 0 correct value',
-	);
+);
 
