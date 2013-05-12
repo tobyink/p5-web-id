@@ -13,7 +13,7 @@
 	:shortdesc      "implementation of WebID (a.k.a. FOAF+SSL)" ;
 	:homepage       <https://metacpan.org/release/Web-ID> ;
 	:download-page  <https://metacpan.org/release/Web-ID> ;
-	:repository     [ a :HgRepository; :browse <https://bitbucket.org/tobyink/p5-web-id> ] ;
+	:repository     [ a :GitRepository; :browse <https://github.com/tobyink/p5-web-id> ] ;
 	:bug-database   <http://rt.cpan.org/Dist/Display.html?Queue=Web-ID> ;
 	:created        "2012-04-26"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
