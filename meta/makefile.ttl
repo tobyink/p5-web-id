@@ -11,6 +11,7 @@
 		"DateTime",
 		"Digest::SHA",
 		"Exporter::TypeTiny 0.004",
+		"File::ShareDir",
 		"List::MoreUtils",
 		"match::simple 0.004",
 		"Moose",
