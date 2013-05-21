@@ -64,9 +64,9 @@ sub get_trine_model
 {
 	my ($uri, $model) = @_;
 	
-	$model //= RDF::Trine::Model->new;
+	$model //= "RDF::Trine::Model"->new;
 	eval {
-		RDF::Trine::Parser->parse_url_into_model($uri, $model);
+		"RDF::Trine::Parser"->parse_url_into_model($uri, $model);
 	};
 	
 	return $model;
@@ -111,19 +111,19 @@ sub make_bigint_from_node
 			if (match $_, $test_hex)
 			{
 				( my $hex = $node->literal_value ) =~ s/[^0-9A-F]//ig;
-				return Math::BigInt->from_hex("0x$hex");
+				return "Math::BigInt"->from_hex("0x$hex");
 			}
 			
 			if (match $_, $test_unsigned)
 			{
 				( my $dec = $node->literal_value ) =~ s/[^0-9]//ig;
-				return Math::BigInt->new("$dec");
+				return "Math::BigInt"->new("$dec");
 			}
 			
 			if (match $_, $test_signed)
 			{
 				( my $dec = $node->literal_value ) =~ s/[^0-9-]//ig;
-				return Math::BigInt->new("$dec");
+				return "Math::BigInt"->new("$dec");
 			}
 			
 			if (match $_, $test_decimal)
@@ -133,7 +133,7 @@ sub make_bigint_from_node
 					if defined $frac;
 				
 				$dec =~ s/[^0-9-]//ig;
-				return Math::BigInt->new("$dec");
+				return "Math::BigInt"->new("$dec");
 			}
 			
 			if (match $_, undef)
@@ -149,7 +149,7 @@ sub make_bigint_from_node
 		if ($opts{'fallback_type'} eq 'hex')
 		{
 			(my $hex = $node->literal_value) =~ s/[^0-9A-F]//ig;
-			return Math::BigInt->from_hex("0x$hex");
+			return "Math::BigInt"->from_hex("0x$hex");
 		}
 		else # dec
 		{
@@ -158,7 +158,7 @@ sub make_bigint_from_node
 				if defined $frac;
 				
 			$dec =~ s/[^0-9]//ig;
-			return Math::BigInt->new("$dec");
+			return "Math::BigInt"->new("$dec");
 		}
 	}
 	

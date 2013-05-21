@@ -25,8 +25,8 @@ sub _sort_san
 {
 	map  { ref($_) eq 'ARRAY' ? (@$_) : () }
 	part {
-		if ($_->isa('Web::ID::SAN::URI'))       { 0 }
-		elsif ($_->isa('Web::ID::SAN::Email'))  { 1 }
+		if ($_->isa("Web::ID::SAN::URI"))       { 0 }
+		elsif ($_->isa("Web::ID::SAN::Email"))  { 1 }
 		else                                    { 2 }
 	}
 	@_;
@@ -51,7 +51,7 @@ has _der => (
 
 has _x509 => (
 	is          => read_only,
-	isa         => 'Crypt::X509',
+	isa         => Type::Utils::class_type({ class => "Crypt::X509" }),
 	lazy_build  => true,
 );
 
@@ -100,13 +100,13 @@ sub _build__der
 
 sub _build__x509
 {
-	return Crypt::X509->new(cert => shift->_der);
+	return "Crypt::X509"->new(cert => shift->_der);
 }
 
 sub _build_public_key
 {
 	my ($self) = @_;
-	Web::ID::RSAKey->new($self->_x509->pubkey_components);
+	Rsakey->new($self->_x509->pubkey_components);
 }
 
 sub _build_subject_alt_names
@@ -142,7 +142,7 @@ my $default_san_factory = sub
 			uniformResourceIdentifier  => 'Web::ID::SAN::URI',
 			rfc822Name                 => 'Web::ID::SAN::Email',
 		}->{ $args{type} }
-		// 'Web::ID::SAN';
+		// "Web::ID::SAN";
 	$class->new(%args);
 };
 
@@ -154,7 +154,7 @@ sub _build_san_factory
 sub timely
 {
 	my ($self, $now) = @_;
-	$now //= DateTime->now;
+	$now //= Datetime->class->now;
 	
 	return if $now > $self->not_after;
 	return if $now < $self->not_before;

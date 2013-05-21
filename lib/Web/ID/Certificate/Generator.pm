@@ -26,7 +26,7 @@ sub import
 
 sub _openssl_path
 {
-	Path::Class::File->new(
+	"Path::Class::File"->new(
 		$^O eq 'Win32'
 			? 'c:\\openssl\\bin\\openssl.exe'
 			: '/usr/bin/openssl'
@@ -62,10 +62,10 @@ sub generate
 	confess "unsupported options: ".(join q(, ), sort keys %options) if %options;
 	
 	my $days = $not_after
-		? $not_after->delta_days( DateTime->now )->days
+		? $not_after->delta_days( Datetime->class->now )->days
 		: 365;
 	
-	my $tempdir = Path::Class::Dir->new( File::Temp->newdir );
+	my $tempdir = "Path::Class::Dir"->new( File::Temp->newdir );
 	$tempdir->mkpath;
 	
 	my $config = $tempdir->file('openssl.cnf')->openw;
@@ -139,14 +139,14 @@ sub generate
 	else
 	{
 		my $p12 = $tempdir->file('cert.p12')->slurp;
-		my $fh  = Path::Class::File->new($dest)->openw;
+		my $fh  = "Path::Class::File"->new($dest)->openw;
 		print $fh $p12;
 	}
 	
 	my ($on_triple, $on_done) = (sub {}, sub {});
 	if (ref $rdf_sink eq 'SCALAR')
 	{
-		$$rdf_sink = RDF::Trine::Model->new;
+		$$rdf_sink = Model->new;
 		$on_triple = sub { $$rdf_sink->add_statement(statement(@_)) };
 	}
 	elsif (blessed($rdf_sink) and $rdf_sink->isa('RDF::Trine::Model'))
@@ -155,10 +155,10 @@ sub generate
 	}
 	else
 	{
-		my $model = RDF::Trine::Model->new;
-		my $fh    = Path::Class::File->new($rdf_sink)->openw;
+		my $model = Model->new;
+		my $fh    = "Path::Class::File"->new($rdf_sink)->openw;
 		$on_triple = sub { $model->add_statement(statement(@_)) };
-		$on_done   = sub { RDF::Trine::Serializer->new('RDFXML')->serialize_model_to_file($fh, $model) };
+		$on_done   = sub { "RDF::Trine::Serializer"->new('RDFXML')->serialize_model_to_file($fh, $model) };
 	}
 	
 	my $pem  = $tempdir->file('cert.pem')->slurp;

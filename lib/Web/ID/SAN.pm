@@ -39,7 +39,7 @@ has key_factory => (
 
 sub _build_model
 {
-	return RDF::Trine::Model->new;
+	return Model->new;
 }
 
 my $default_key_factory = sub
@@ -47,7 +47,7 @@ my $default_key_factory = sub
 	my (%args) = @_;
 	return unless $args{exponent};
 	return unless $args{modulus};
-	Web::ID::RSAKey->new(%args);
+	Rsakey->new(%args);
 };
 
 sub _build_key_factory
@@ -58,7 +58,7 @@ sub _build_key_factory
 sub uri_object
 {
 	my ($self) = @_;
-	return URI->new(sprintf 'urn:x-subject-alt-name:%s:%s', map {uri_escape $_} $self->type, $self->value);
+	return Uri->new(sprintf 'urn:x-subject-alt-name:%s:%s', map {uri_escape $_} $self->type, $self->value);
 }
 
 sub to_string

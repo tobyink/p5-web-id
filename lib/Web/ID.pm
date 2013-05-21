@@ -87,14 +87,14 @@ sub _build_first_valid_san
 sub node
 {
 	my ($self) = @_;
-	RDF::Trine::Node::Resource->new($self->uri.'');
+	"RDF::Trine::Node::Resource"->new($self->uri.'');
 }
 
 sub get
 {
 	my $self = shift;
 	my @pred = map {
-		if (blessed $_ and $_->isa('RDF::Trine::Node'))   {   $_ }
+		if (blessed $_ and $_->isa("RDF::Trine::Node"))   {   $_ }
 		else                                              { u $_ }
 	} @_;
 	

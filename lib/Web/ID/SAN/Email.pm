@@ -22,7 +22,7 @@ use Web::ID::Util;
 
 use Moose;
 use namespace::sweep;
-extends 'Web::ID::SAN';
+extends "Web::ID::SAN";
 
 has '+type' => (default => 'rfc822Name');
 
@@ -47,8 +47,8 @@ around _build_model => sub
 	{
 		if ($finger->endpoint)
 		{
-			my $store = RDF::Trine::Store::SPARQL->new($finger->endpoint);
-			return RDF::Trine::Model->new($store);
+			my $store = "RDF::Trine::Store::SPARQL"->new($finger->endpoint);
+			return Model->new($store);
 		}
 		return $finger->graph;
 	}
