@@ -15,7 +15,7 @@
 		"match::simple 0.004",
 		"Moose",
 		"namespace::sweep",
-		"Path::Class",
+		"Path::Tiny",
 		"Plack",
 		"RDF::Query 2.900",
 		"RDF::Trine 1.000",
