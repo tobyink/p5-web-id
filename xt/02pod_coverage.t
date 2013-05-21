@@ -7,7 +7,6 @@ my @modules =
 		lib/Plack/Middleware/Auth/WebID.pm
 		lib/Web/ID/Certificate/Generator.pm
 		lib/Web/ID/Certificate.pm
-		lib/Web/ID/FAQ.pod
 		lib/Web/ID.pm
 		lib/Web/ID/RSAKey.pm
 		lib/Web/ID/SAN/Email.pm
