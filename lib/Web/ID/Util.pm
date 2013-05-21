@@ -9,6 +9,7 @@ BEGIN {
 	$Web::ID::Util::VERSION   = '1.922';
 }
 
+use match::simple qw/match/;
 use Carp qw/confess/;
 use Math::BigInt 0 try => 'GMP';
 use RDF::Trine::NamespaceMap;
@@ -105,27 +106,27 @@ sub make_bigint_from_node
 	
 	if ($node->is_literal)
 	{
-		given ($node->literal_datatype)
+		for ($node->literal_datatype)
 		{
-			when ($_ ~~ $test_hex)
+			if (match $_, $test_hex)
 			{
 				( my $hex = $node->literal_value ) =~ s/[^0-9A-F]//ig;
 				return Math::BigInt->from_hex("0x$hex");
 			}
 			
-			when ($_ ~~ $test_unsigned)
+			if (match $_, $test_unsigned)
 			{
 				( my $dec = $node->literal_value ) =~ s/[^0-9]//ig;
 				return Math::BigInt->new("$dec");
 			}
 			
-			when ($_ ~~ $test_signed)
+			if (match $_, $test_signed)
 			{
 				( my $dec = $node->literal_value ) =~ s/[^0-9-]//ig;
 				return Math::BigInt->new("$dec");
 			}
 			
-			when ($_ ~~ $test_decimal)
+			if (match $_, $test_decimal)
 			{
 				my ($dec, $frac) = split /\./, $node->literal_value, 2;
 				warn "Ignoring fractional part of xsd:decimal number."
@@ -135,7 +136,7 @@ sub make_bigint_from_node
 				return Math::BigInt->new("$dec");
 			}
 			
-			when ($_ ~~ undef)
+			if (match $_, undef)
 			{
 				$opts{'fallback'} = $node;
 			}

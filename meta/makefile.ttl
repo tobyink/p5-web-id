@@ -12,6 +12,7 @@
 		"Digest::SHA",
 		"Exporter::TypeTiny 0.004",
 		"List::MoreUtils",
+		"match::simple 0.004",
 		"Moose",
 		"namespace::sweep",
 		"Path::Class",
