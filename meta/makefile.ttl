@@ -10,6 +10,7 @@
 		"Crypt::X509",
 		"DateTime",
 		"Digest::SHA",
+		"Exporter::TypeTiny 0.004",
 		"List::MoreUtils",
 		"Moose",
 		"namespace::sweep",
@@ -17,7 +18,6 @@
 		"Plack",
 		"RDF::Query 2.900",
 		"RDF::Trine 1.000",
-		"Sub::Exporter",
 		"Types::Standard 0.004",
 		"URI";
 	:test_requires
