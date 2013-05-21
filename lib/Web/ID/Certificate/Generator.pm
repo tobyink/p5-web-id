@@ -8,13 +8,12 @@ BEGIN {
 	$Web::ID::Certificate::Generator::VERSION   = '1.922';
 }
 
-use MooseX::Types::Moose -all;
 use Moose::Util qw(apply_all_roles);
 use File::Temp qw();
 use Path::Class qw();
 use RDF::Trine qw(statement blank iri literal);
 use Web::ID::Certificate;
-use Web::ID::Types ':all';
+use Web::ID::Types -types;
 use Web::ID::Util;
 
 use Moose::Role;

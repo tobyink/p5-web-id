@@ -17,8 +17,7 @@ BEGIN {
 	}
 }
 
-use MooseX::Types::Moose -all;
-use Web::ID::Types -all;
+use Web::ID::Types -types;
 use Web::ID::Util;
 
 use Moose;

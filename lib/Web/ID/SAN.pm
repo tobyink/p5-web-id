@@ -8,8 +8,7 @@ BEGIN {
 	$Web::ID::SAN::VERSION   = '1.922';
 }
 
-use MooseX::Types::Moose -all;
-use Web::ID::Types -all;
+use Web::ID::Types -types;
 use RDF::Query 2.900;
 use URI 0;
 use URI::Escape 0 qw/uri_escape/;

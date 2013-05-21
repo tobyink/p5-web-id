@@ -8,8 +8,7 @@ BEGIN {
 	$Web::ID::RSAKey::VERSION   = '1.922';
 }
 
-use MooseX::Types::Moose -all;
-use Web::ID::Types -all;
+use Web::ID::Types -types;
 use Web::ID::Util;
 
 use Moose;

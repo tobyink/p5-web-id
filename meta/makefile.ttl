@@ -12,13 +12,13 @@
 		"Digest::SHA",
 		"List::MoreUtils",
 		"Moose",
-		"MooseX::Types",
 		"namespace::sweep",
 		"Path::Class",
 		"Plack",
 		"RDF::Query 2.900",
 		"RDF::Trine 1.000",
 		"Sub::Exporter",
+		"Types::Standard 0.004",
 		"URI";
 	:test_requires
 		"Test::More 0.61"  .

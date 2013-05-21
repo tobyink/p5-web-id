@@ -10,10 +10,9 @@ BEGIN {
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!
 use DateTime 0;
-use MooseX::Types::Moose -all;
 use Digest::SHA qw(sha1_hex);
 use MIME::Base64 0 qw(decode_base64);
-use Web::ID::Types -all;
+use Web::ID::Types -types;
 use Web::ID::SAN;
 use Web::ID::SAN::Email;
 use Web::ID::SAN::URI;

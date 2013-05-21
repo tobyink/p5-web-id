@@ -7,46 +7,48 @@ use utf8;
 BEGIN {
 	$Web::ID::Types::AUTHORITY = 'cpan:TOBYINK';
 	$Web::ID::Types::VERSION   = '1.922';
-}
+};
 
 use DateTime;
 use Math::BigInt;
 use RDF::Trine;
 use URI;
 
-use MooseX::Types
-	-declare => [qw[ Bigint Certificate Datetime Finger Model Rsakey San Uri ]];
-use MooseX::Types::Moose -all;
+use Type::Library
+	-base,
+	-declare => qw[ Bigint Certificate Datetime Finger Model Rsakey San Uri ];
+use Type::Utils;
 
-class_type Bigint, { class => 'Math::BigInt' };
+BEGIN { extends "Types::Standard" };
+
+class_type Bigint, { class => "Math::BigInt" };
 coerce Bigint,
-	from Str, via { "Math::BigInt"->new($_) };
+	from Str, q { "Math::BigInt"->new($_) };
 		
-class_type Certificate, { class => 'Web::ID::Certificate' };
+class_type Certificate, { class => "Web::ID::Certificate" };
 coerce Certificate,
-	from HashRef, via  { "Web::ID::Certificate"->new(%$_) },
-	from Str,     via  { "Web::ID::Certificate"->new(pem => $_) };
+	from HashRef, q { "Web::ID::Certificate"->new(%$_) },
+	from Str,     q { "Web::ID::Certificate"->new(pem => $_) };
 
-class_type Datetime,	{ class => 'DateTime' };
+class_type Datetime,	{ class => "DateTime" };
 coerce Datetime,
-	from Num, via { "DateTime"->from_epoch(epoch => $_) };
+	from Num, q { "DateTime"->from_epoch(epoch => $_) };
 
-class_type Finger, { class => 'WWW::Finger' };
+class_type Finger, { class => "WWW::Finger" };
 coerce Finger,
-	from Str, via { "WWW::Finger"->new($_) if UNIVERSAL::can('WWW::Finger', 'new') };
+	from Str, q { (UNIVERSAL::can("WWW::Finger", "new") ? "WWW::Finger"->new($_) : undef) };
 
-class_type Model, { class => 'RDF::Trine::Model' };
+class_type Model, { class => "RDF::Trine::Model" };
 
-class_type Rsakey, { class => 'Web::ID::RSAKey' };
+class_type Rsakey, { class => "Web::ID::RSAKey" };
 coerce Rsakey,
-	from HashRef, via  { "Web::ID::RSAKey"->new(%$_) };
+	from HashRef, q { "Web::ID::RSAKey"->new(%$_) };
 
-class_type San, { class => 'Web::ID::SAN' };
+class_type San, { class => "Web::ID::SAN" };
 
-class_type Uri, { class => 'URI' };
+class_type Uri, { class => "URI" };
 coerce Uri,
-	from Str, via { "URI"->new($_) };
-
+	from Str, q { "URI"->new($_) };
 
 __PACKAGE__
 __END__
@@ -57,7 +59,7 @@ Web::ID::Types - type library for Web::ID and friends
 
 =head1 DESCRIPTION
 
-A L<MooseX::Types> type library defining:
+A L<Type::Library> defining:
 
 =head2 Types
 
@@ -81,6 +83,8 @@ A L<MooseX::Types> type library defining:
 
 =back
 
+... and re-exporting everything from L<Types::Standard>.
+
 =head1 BUGS
 
 Please report any bugs to
@@ -88,7 +92,7 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Web-ID>.
 
 =head1 SEE ALSO
 
-L<Web::ID>.
+L<Web::ID>, L<Type::Library>.
 
 =head1 AUTHOR
 
