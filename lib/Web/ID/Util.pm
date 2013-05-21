@@ -16,12 +16,14 @@ use RDF::Trine::NamespaceMap;
 use List::MoreUtils qw(:all !true !false);
 
 use base "Exporter::TypeTiny";
-our (@EXPORT, @EXPORT_OK);
-BEGIN {
-	@EXPORT    = qw(make_bigint_from_node get_trine_model u uu
-	                true false read_only read_write);
-	@EXPORT_OK = (@EXPORT, grep {!/^(true|false)$/} @List::MoreUtils::EXPORT_OK);
-}
+our @EXPORT = qw(
+	make_bigint_from_node get_trine_model u uu
+	true false read_only read_write
+);
+our @EXPORT_OK = (
+	@EXPORT,
+	grep {!/^(true|false)$/} @List::MoreUtils::EXPORT_OK
+);
 
 use constant {
 	read_only  => 'ro',

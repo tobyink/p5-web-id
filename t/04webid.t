@@ -49,8 +49,9 @@ BEGIN {
 		: sub (&;@) { my $code = shift; $code->() }
 }
 
--x '/usr/bin/openssl'
-	or plan skip_all => "/usr/bin/openssl not executable";
+require Web::ID::Util::FindOpenSSL;
+-x Web::ID::Util::FindOpenSSL::find_openssl()
+	or plan skip_all => "Cannot find an executable OpenSSL binary";
 
 # They're unlikely to have /usr/bin/openssl anyway, but...
 $^O eq 'MSWin32'
@@ -78,7 +79,7 @@ sub tmpfile
 			{
 				shift->{out_headers}{content_type} =
 					$p eq 'david' ? 'text/turtle' : 'application/rdf+xml';
-				~~main::tmpfile($p)->slurp;
+				scalar main::tmpfile($p)->slurp;
 			}
 			else
 			{

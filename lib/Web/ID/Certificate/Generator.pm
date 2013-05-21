@@ -26,11 +26,8 @@ sub import
 
 sub _openssl_path
 {
-	path(
-		$^O eq 'Win32'
-			? 'c:\\openssl\\bin\\openssl.exe'
-			: '/usr/bin/openssl'
-	)
+	require Web::ID::Util::FindOpenSSL;
+	path( Web::ID::Util::FindOpenSSL::find_openssl() );
 }
 
 sub generate
@@ -314,8 +311,8 @@ Not required.
 =item * C<openssl_path>
 
 The path to the OpenSSL binary. Yes that's right, this role calls the
-OpenSSL binary via C<system> calls. Defaults to "/usr/bin/openssl" (or
-"c:\openssl\bin\openssl.exe" on Windows).
+OpenSSL binary via C<system> calls. Defaults to automatic discovery
+via L<Web::ID::Util::FindOpenSSL>.
 
 =item * C<key_size>
 
