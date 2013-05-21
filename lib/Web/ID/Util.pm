@@ -6,7 +6,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Util::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Util::VERSION   = '1.922';
+	$Web::ID::Util::VERSION   = '1.923';
 }
 
 use match::simple qw/match/;

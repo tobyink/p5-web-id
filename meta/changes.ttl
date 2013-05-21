@@ -106,3 +106,18 @@ dist:v_1-922
 		dcs:item   [ rdfs:label "Documented test suite."@en; a dcs:Documentation ];
 		dcs:item   [ rdfs:label "Make test suite output cleaner (no openssl junk) if Capture::Tiny is available."@en; a dcs:Change ];
 	].
+
+dist:project :release dist:v_1-923 .
+dist:v_1-923
+	a               :Version ;
+	dc:issued       "2013-05-21"^^xsd:date ;
+	:revision       "1.923"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.923.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-922 ;
+		dcs:item   [ rdfs:label "Switched from MooseX::Types to Types::Standard."@en; a dcs:Change ];
+		dcs:item   [ rdfs:label "Switched from Sub::Exporter to Exporter::TypeTiny."@en; a dcs:Change ];
+		dcs:item   [ rdfs:label "Switched from smartmatch to match::smart."@en; a dcs:Change ];
+		dcs:item   [ rdfs:label "Switched from Path::Class to Path::Tiny."@en; a dcs:Change ];
+		dcs:item   [ rdfs:label "Do a better job searching for OpenSSL binary; use Alien::OpenSSL if it can't be found."@en; a dcs:Change ];
+	].
