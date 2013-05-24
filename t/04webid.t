@@ -36,7 +36,7 @@ use lib 'lib';
 use lib 't/lib';
 
 use File::Temp qw();
-use Path::Class qw();
+use Path::Tiny qw();
 use Test::More;
 use Web::ID;
 use Web::ID::Certificate::Generator;
@@ -60,12 +60,12 @@ $^O eq 'MSWin32'
 our @PEOPLE = qw(alice bob carol david eve);
 our %Certificates;
 
-my $tmpdir = Path::Class::Dir->new( File::Temp->newdir );
+my $tmpdir = "Path::Tiny"->tempdir;
 $tmpdir->mkpath;
 
 sub tmpfile
 {
-	return $tmpdir->file(@_) if @_;
+	return $tmpdir->child(@_) if @_;
 	return $tmpdir;
 }
 
@@ -144,4 +144,4 @@ do {
 my $eve = Web::ID->new(certificate => $Certificates{eve});
 ok(!$eve->valid, 'eve is evil!');
 
-tmpfile()->rmtree;
+tmpfile()->remove_tree;
