@@ -121,3 +121,14 @@ dist:v_1-923
 		dcs:item   [ rdfs:label "Switched from Path::Class to Path::Tiny."@en; a dcs:Change ];
 		dcs:item   [ rdfs:label "Do a better job searching for OpenSSL binary; use Alien::OpenSSL if it can't be found."@en; a dcs:Change ];
 	].
+
+dist:project :release dist:v_1-924_01 .
+dist:v_1-924_01
+	a               :Version ;
+	dc:issued       "2013-08-07"^^xsd:date ;
+	:revision       "1.924_01"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.924_01.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-923 ;
+		dcs:item   [ rdfs:label "Minor packaging fixes."@en; a dcs:Packaging ];
+	].
