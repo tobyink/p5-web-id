@@ -17,7 +17,7 @@ use URI;
 use Type::Library
 	-base,
 	-declare => qw[ Bigint Certificate Datetime Finger Model Rsakey San Uri ];
-use Type::Utils;
+use Type::Utils -all;
 
 BEGIN { extends "Types::Standard" };
 

@@ -131,4 +131,5 @@ dist:v_1-924_01
 	dcs:changeset [
 		dcs:versus dist:v_1-923 ;
 		dcs:item   [ rdfs:label "Minor packaging fixes."@en; a dcs:Packaging ];
+		dcs:item   [ rdfs:label "Type::Utils no longer exports `extends` by default; request it."@en; a dcs:Bugfix ];
 	].
