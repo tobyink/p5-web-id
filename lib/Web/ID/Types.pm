@@ -6,7 +6,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Types::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Types::VERSION   = '1.924_01';
+	$Web::ID::Types::VERSION   = '1.924_02';
 };
 
 use DateTime;

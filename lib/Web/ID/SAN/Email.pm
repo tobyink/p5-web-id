@@ -7,7 +7,7 @@ our $WWW_Finger = 0;
 
 BEGIN {
 	$Web::ID::SAN::Email::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::SAN::Email::VERSION   = '1.924_01';
+	$Web::ID::SAN::Email::VERSION   = '1.924_02';
 	
 	eval {
 		no warnings;

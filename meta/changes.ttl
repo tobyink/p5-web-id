@@ -133,3 +133,14 @@ dist:v_1-924_01
 		dcs:item   [ rdfs:label "Minor packaging fixes."@en; a dcs:Packaging ];
 		dcs:item   [ rdfs:label "Type::Utils no longer exports `extends` by default; request it."@en; a dcs:Bugfix ];
 	].
+
+dist:project :release dist:v_1-924_02 .
+dist:v_1-924_02
+	a               :Version ;
+	dc:issued       "2013-08-09"^^xsd:date ;
+	:revision       "1.924_02"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.924_02.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-924_01 ;
+		dcs:item   [ rdfs:label "Package using Dist::Inkt."@en; a dcs:Packaging ];
+	].
