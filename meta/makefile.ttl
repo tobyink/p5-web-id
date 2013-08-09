@@ -1,28 +1,21 @@
 # This file provides instructions for packaging.
 
-@prefix : <http://purl.org/NET/cpan-uri/terms#> .
+@prefix : <http://ontologi.es/doap-deps#> .
 
 <http://purl.org/NET/cpan-uri/dist/Web-ID/project>
-	:perl_version_from _:main ;
-	:version_from _:main ;
-	:readme_from _:main ;
-	:requires
-		"Crypt::X509",
-		"DateTime",
-		"Digest::SHA",
-		"Exporter::TypeTiny 0.004",
-		"File::ShareDir",
-		"List::MoreUtils",
-		"match::simple 0.004",
-		"Moose",
-		"namespace::sweep",
-		"Path::Tiny",
-		"Plack",
-		"RDF::Query 2.900",
-		"RDF::Trine 1.000",
-		"Types::Standard 0.004",
-		"URI";
-	:test_requires
-		"Test::More 0.61"  .
-
-_:main <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName> "lib/Web/ID.pm" .
+	:runtime-requirement [ :on "Crypt::X509"^^:CpanId ];
+	:runtime-requirement [ :on "DateTime"^^:CpanId ];
+	:runtime-requirement [ :on "Digest::SHA"^^:CpanId ];
+	:runtime-requirement [ :on "Exporter::TypeTiny 0.004"^^:CpanId ];
+	:runtime-requirement [ :on "File::ShareDir"^^:CpanId ];
+	:runtime-requirement [ :on "List::MoreUtils"^^:CpanId ];
+	:runtime-requirement [ :on "match::simple 0.004"^^:CpanId ];
+	:runtime-requirement [ :on "Moose 2.0600"^^:CpanId ];
+	:runtime-requirement [ :on "namespace::sweep"^^:CpanId ];
+	:runtime-requirement [ :on "Path::Tiny"^^:CpanId ];
+	:runtime-requirement [ :on "Plack"^^:CpanId ];
+	:runtime-requirement [ :on "RDF::Query 2.900"^^:CpanId ];
+	:runtime-requirement [ :on "RDF::Trine 1.000"^^:CpanId ];
+	:runtime-requirement [ :on "Types::Standard 0.022"^^:CpanId ];
+	:runtime-requirement [ :on "URI"^^:CpanId ];
+	:test-requirement    [ :on "Test::More 0.96"^^:CpanId ].
