@@ -4,6 +4,7 @@
 
 <http://purl.org/NET/cpan-uri/dist/Web-ID/project>
 	:configure-requirement [ :on "File::ShareDir"^^:CpanId ];
+	:runtime-requirement   [ :on "perl 5.010"^^:CpanId ];
 	:runtime-requirement   [ :on "Crypt::X509"^^:CpanId ];
 	:runtime-requirement   [ :on "DateTime"^^:CpanId ];
 	:runtime-requirement   [ :on "Digest::SHA"^^:CpanId ];
@@ -13,7 +14,7 @@
 	:runtime-requirement   [ :on "match::simple 0.004"^^:CpanId ];
 	:runtime-requirement   [ :on "Moose 2.0600"^^:CpanId ];
 	:runtime-requirement   [ :on "namespace::sweep"^^:CpanId ];
-	:runtime-requirement   [ :on "Path::Tiny"^^:CpanId ];
+	:runtime-requirement   [ :on "Path::Tiny 0.017"^^:CpanId ];
 	:runtime-requirement   [ :on "Plack"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Query 2.900"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Trine 1.000"^^:CpanId ];
