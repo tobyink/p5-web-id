@@ -155,3 +155,11 @@ dist:v_1-924_03
 		dcs:versus dist:v_1-924_02 ;
 		dcs:item   [ rdfs:label "configure_requires File::ShareDir."@en; a dcs:Packaging ];
 	].
+
+dist:project :release dist:v_1-925 .
+dist:v_1-925
+	a               :Version ;
+	dc:issued       "2013-09-03"^^xsd:date ;
+	:revision       "1.925"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.925.tar.gz> ;
+	rdfs:comment    "No functional changes."@en .
