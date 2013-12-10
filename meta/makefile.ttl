@@ -8,7 +8,7 @@
 	:runtime-requirement   [ :on "Crypt::X509"^^:CpanId ];
 	:runtime-requirement   [ :on "DateTime"^^:CpanId ];
 	:runtime-requirement   [ :on "Digest::SHA"^^:CpanId ];
-	:runtime-requirement   [ :on "Exporter::TypeTiny 0.004"^^:CpanId ];
+	:runtime-requirement   [ :on "Exporter::Tiny"^^:CpanId ];
 	:runtime-requirement   [ :on "File::ShareDir"^^:CpanId ];
 	:runtime-requirement   [ :on "List::MoreUtils"^^:CpanId ];
 	:runtime-requirement   [ :on "match::simple 0.004"^^:CpanId ];

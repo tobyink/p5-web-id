@@ -15,7 +15,7 @@ use Math::BigInt 0 try => 'GMP';
 use RDF::Trine::NamespaceMap;
 use List::MoreUtils qw(:all !true !false);
 
-use base "Exporter::TypeTiny";
+use Exporter::Tiny;
 our @EXPORT = qw(
 	make_bigint_from_node get_trine_model u uu
 	true false read_only read_write
@@ -24,6 +24,7 @@ our @EXPORT_OK = (
 	@EXPORT,
 	grep {!/^(true|false)$/} @List::MoreUtils::EXPORT_OK
 );
+our @ISA = qw( Exporter::Tiny );
 
 use constant {
 	read_only  => 'ro',
