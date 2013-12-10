@@ -163,3 +163,14 @@ dist:v_1-925
 	:revision       "1.925"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.925.tar.gz> ;
 	rdfs:comment    "No functional changes."@en .
+
+dist:project :release dist:v_1-926 .
+dist:v_1-926
+	a               :Version ;
+	dc:issued       "2013-12-10"^^xsd:date ;
+	:revision       "1.926"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.926.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-925 ;
+		dcs:item   [ rdfs:label "Use Exporter::Tiny instead of Exporter::TypeTiny."@en; a dcs:Update ];
+	].

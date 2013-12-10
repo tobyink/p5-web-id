@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Certificate::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Certificate::VERSION   = '1.925';
+	$Web::ID::Certificate::VERSION   = '1.926';
 }
 
 use Crypt::X509 0.50 ();  # why the hell does this export anything?!

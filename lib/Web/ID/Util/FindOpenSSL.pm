@@ -1,7 +1,7 @@
 package Web::ID::Util::FindOpenSSL;
 
 our $AUTHORITY = "cpan:TOBYINK";
-our $VERSION   = "1.925";
+our $VERSION   = "1.926";
 
 use strict;
 use File::ShareDir qw/dist_dir/;

@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::RSAKey::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::RSAKey::VERSION   = '1.925';
+	$Web::ID::RSAKey::VERSION   = '1.926';
 }
 
 use Web::ID::Types -types;
