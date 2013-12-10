@@ -183,7 +183,7 @@ Many of them may also be useful creating the kind of apps that
 Web-ID is used to authenticate for.
 
 Here is a very brief summary. By B<default>, they're B<all> exported
-to your namespace. (This modulue uses L<Exporter::TypeTiny> so you get
+to your namespace. (This module uses L<Exporter::Tiny> so you get
 pretty good control over what gets exported.)
 
 =over
@@ -231,7 +231,7 @@ L<Web::ID> itself.
 
 =head1 SEE ALSO
 
-L<Exporter::TypeTiny>,
+L<Exporter::Tiny>,
 L<Web::ID>,
 L<Acme::24>.
 
