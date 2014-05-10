@@ -11,13 +11,13 @@
 	:runtime-requirement   [ :on "Exporter::Tiny"^^:CpanId ];
 	:runtime-requirement   [ :on "File::ShareDir"^^:CpanId ];
 	:runtime-requirement   [ :on "List::MoreUtils"^^:CpanId ];
-	:runtime-requirement   [ :on "match::simple 0.004"^^:CpanId ];
+	:runtime-requirement   [ :on "match::simple 0.008"^^:CpanId ];
 	:runtime-requirement   [ :on "Moose 2.0600"^^:CpanId ];
 	:runtime-requirement   [ :on "namespace::sweep"^^:CpanId ];
 	:runtime-requirement   [ :on "Path::Tiny 0.017"^^:CpanId ];
 	:runtime-requirement   [ :on "Plack"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Query 2.900"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Trine 1.000"^^:CpanId ];
-	:runtime-requirement   [ :on "Types::Standard 0.022"^^:CpanId ];
+	:runtime-requirement   [ :on "Types::Standard 0.040"^^:CpanId ];
 	:runtime-requirement   [ :on "URI"^^:CpanId ];
 	:test-requirement      [ :on "Test::More 0.96"^^:CpanId ].
