@@ -9,30 +9,24 @@ BEGIN {
 	$Web::ID::Types::VERSION   = '1.926';
 };
 
-use DateTime;
 use Math::BigInt;
 use RDF::Trine;
-use URI;
 
 use Type::Library
 	-base,
-	-declare => qw[ Bigint Certificate Datetime Finger Model Rsakey San Uri ];
+	-declare => qw[ Bigint Certificate Finger Model Rsakey San ];
 use Type::Utils -all;
 
-BEGIN { extends "Types::Standard" };
+BEGIN { extends qw( Types::Standard Types::DateTime Types::URI ) };
 
 class_type Bigint, { class => "Math::BigInt" };
 coerce Bigint,
 	from Str, q { "Math::BigInt"->new($_) };
-		
+
 class_type Certificate, { class => "Web::ID::Certificate" };
 coerce Certificate,
 	from HashRef, q { "Web::ID::Certificate"->new(%$_) },
 	from Str,     q { "Web::ID::Certificate"->new(pem => $_) };
-
-class_type Datetime,	{ class => "DateTime" };
-coerce Datetime,
-	from Num, q { "DateTime"->from_epoch(epoch => $_) };
 
 class_type Finger, { class => "WWW::Finger" };
 coerce Finger,
@@ -45,10 +39,6 @@ coerce Rsakey,
 	from HashRef, q { "Web::ID::RSAKey"->new(%$_) };
 
 class_type San, { class => "Web::ID::SAN" };
-
-class_type Uri, { class => "URI" };
-coerce Uri,
-	from Str, q { "URI"->new($_) };
 
 __PACKAGE__
 __END__
@@ -69,8 +59,6 @@ A L<Type::Library> defining:
 
 =item * C<Certificate>
 
-=item * C<Datetime>
-
 =item * C<Finger>
 
 =item * C<Model>
@@ -79,11 +67,10 @@ A L<Type::Library> defining:
 
 =item * C<San>
 
-=item * C<Uri>
-
 =back
 
-... and re-exporting everything from L<Types::Standard>.
+... and re-exporting everything from L<Types::Standard>,
+L<Types::DateTime>, and L<Types::URI>.
 
 =head1 BUGS
 

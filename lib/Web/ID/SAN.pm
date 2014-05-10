@@ -58,7 +58,7 @@ sub _build_key_factory
 sub uri_object
 {
 	my ($self) = @_;
-	return Uri->new(sprintf 'urn:x-subject-alt-name:%s:%s', map {uri_escape $_} $self->type, $self->value);
+	return Uri->coerce(sprintf 'urn:x-subject-alt-name:%s:%s', map {uri_escape $_} $self->type, $self->value);
 }
 
 sub to_string

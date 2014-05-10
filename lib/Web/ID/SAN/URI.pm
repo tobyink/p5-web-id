@@ -20,7 +20,7 @@ has '+type' => (default => 'uniformResourceIdentifier');
 override uri_object => sub
 {
 	my ($self) = @_;
-	return Uri->new($self->value);
+	return Uri->coerce($self->value);
 };
 
 around _build_model => sub
