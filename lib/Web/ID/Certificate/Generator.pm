@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::Certificate::Generator::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::Certificate::Generator::VERSION   = '1.926';
+	$Web::ID::Certificate::Generator::VERSION   = '1.927';
 }
 
 use Moose::Util qw(apply_all_roles);

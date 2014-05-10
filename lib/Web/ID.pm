@@ -5,7 +5,7 @@ use utf8;
 
 BEGIN {
 	$Web::ID::AUTHORITY = 'cpan:TOBYINK';
-	$Web::ID::VERSION   = '1.926';
+	$Web::ID::VERSION   = '1.927';
 }
 
 use Web::ID::Types -types;

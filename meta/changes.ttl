@@ -174,3 +174,16 @@ dist:v_1-926
 		dcs:versus dist:v_1-925 ;
 		dcs:item   [ rdfs:label "Use Exporter::Tiny instead of Exporter::TypeTiny."@en; a dcs:Update ];
 	].
+
+dist:project :release dist:v_1-927 .
+dist:v_1-927
+	a               :Version ;
+	dc:issued       "2014-05-10"^^xsd:date ;
+	:revision       "1.927"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Web-ID-1.927.tar.gz> ;
+	dcs:changeset [
+		dcs:versus dist:v_1-926 ;
+		dcs:item   [ rdfs:label "Bump required version of match::simple to 0.008."@en; a dcs:Packaging ];
+		dcs:item   [ rdfs:label "Bump required version of Types::Standard to 0.040."@en; a dcs:Packaging ];
+		dcs:item   [ rdfs:label "Rather than defining Datetime and Uri types in Web::ID::Types, use Types::DateTime and Types::URI from CPAN."@en; a dcs:Change ];
+	].
