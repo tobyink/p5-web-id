@@ -18,6 +18,8 @@
 	:runtime-requirement   [ :on "Plack"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Query 2.900"^^:CpanId ];
 	:runtime-requirement   [ :on "RDF::Trine 1.000"^^:CpanId ];
+	:runtime-requirement   [ :on "Types::DateTime"^^:CpanId ];
 	:runtime-requirement   [ :on "Types::Standard 0.040"^^:CpanId ];
+	:runtime-requirement   [ :on "Types::URI"^^:CpanId ];
 	:runtime-requirement   [ :on "URI"^^:CpanId ];
 	:test-requirement      [ :on "Test::More 0.96"^^:CpanId ].
